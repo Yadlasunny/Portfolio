@@ -1,8 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import emailjs from "emailjs-com";
+import { FaGithub, FaLinkedin, FaTwitter, FaHeart, FaRegHeart } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
+import facialExpression from "./assets/facial-expression.jpg";
+import agroInformatics from "./assets/agro-informatics.jpg";
+// use placeholder placed in public/assets/placeholder.jpg
+const placeholder = "/assets/placeholder.jpg";
 
 export default function Portfolio() {
   const [dark, setDark] = useState(() => localStorage.getItem("theme") === "dark");
@@ -10,12 +14,25 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
   const [projectFilter, setProjectFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [sending, setSending] = useState(false);
+  const [formStatus, setFormStatus] = useState(null); // { type: 'success'|'error', text: '...' }
+  const [searchTerm, setSearchTerm] = useState("");
+  const [toast, setToast] = useState(null); // short ephemeral messages
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const raw = localStorage.getItem("favorites");
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
 
   const sections = {
     home: useRef(null),
     about: useRef(null),
     skills: useRef(null),
     experience: useRef(null), // NEW
+    education: useRef(null),
     projects: useRef(null),
     contact: useRef(null),
     blog: useRef(null),
@@ -39,7 +56,7 @@ export default function Portfolio() {
       tech: ["Python", "Spark", "Hadoop", "NumPy", "Pandas", "Scikit-learn"],
       live: "#",
       repo: "#",
-      image: "https://via.placeholder.com/600x340?text=Agro+Informatics",
+      image: agroInformatics, // changed to use the imported asset
     },
     {
       id: 2,
@@ -57,7 +74,7 @@ export default function Portfolio() {
       tech: ["CNN", "YOLO", "TensorFlow", "OpenCV", "Squiznet"],
       live: "#",
       repo: "#",
-      image: "https://via.placeholder.com/600x340?text=Facial+Expression+Analysis",
+      image: facialExpression,
     },
   ];
 
@@ -107,10 +124,10 @@ export default function Portfolio() {
 
   const filteredProjects = useMemo(
     () =>
-      projectFilter === "All"
-        ? projects
-        : projects.filter(p => p.tech.includes(projectFilter)),
-    [projects, projectFilter]
+      projects
+        .filter(p => projectFilter === "All" || p.tech.includes(projectFilter))
+        .filter(p => !searchTerm || p.title.toLowerCase().includes(searchTerm.toLowerCase())),
+    [projects, projectFilter, searchTerm]
   );
 
   useEffect(() => {
@@ -142,21 +159,55 @@ export default function Portfolio() {
     sections[id]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // NEW: Functions to manipulate the count state
-  function increase() {
-    setCount(c => c + 1);
-  }
+  async function sendEmail(e) {
+    e.preventDefault();
+    setSending(true);
+    setFormStatus(null);
+    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_ok4zv3a";
+    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_p2t0si7";
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "15kc-iZa0Y2AqSoU0";
 
-  function decrease() {
-    setCount(c => c - 1);
-  }
-
-  function reset() {
-    setCount(0);
+    try {
+      await emailjs.sendForm(serviceID, templateID, e.target, publicKey);
+      setFormStatus({ type: "success", text: "Message sent successfully." });
+      e.target.reset();
+    } catch (err) {
+      setFormStatus({ type: "error", text: "Error sending message. Please try again later." });
+    } finally {
+      setSending(false);
+    }
   }
 
   function closeModal() {
     setSelectedProject(null);
+  }
+
+  // close modal with ESC
+  useEffect(() => {
+    if (!selectedProject) return;
+    const onKey = (e) => { if (e.key === "Escape") closeModal(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedProject]);
+
+  function copyToClipboard(text, label) {
+    navigator.clipboard?.writeText(text).then(() => {
+      setToast(`${label} copied`);
+      setTimeout(() => setToast(null), 2000);
+    }).catch(() => {
+      setToast("Copy failed");
+      setTimeout(() => setToast(null), 2000);
+    });
+  }
+
+  function toggleFavorite(id) {
+    setFavorites(prev => {
+      const s = new Set(prev);
+      if (s.has(id)) s.delete(id); else s.add(id);
+      const arr = Array.from(s);
+      try { localStorage.setItem("favorites", JSON.stringify(arr)); } catch {}
+      return arr;
+    });
   }
 
   return (
@@ -261,10 +312,10 @@ export default function Portfolio() {
               </button>
               <a
                 href="/resume.pdf"
-                download
+                download="Resume"
                 className="ml-4 px-4 py-2 rounded bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition"
               >
-                Download Resume
+                Resume
               </a>
             </div>
           </div>
@@ -389,6 +440,14 @@ export default function Portfolio() {
             <span className="h-8 w-1.5 rounded bg-indigo-600" /> Projects
           </h2>
           {/* Filter Bar */}
+          <div className="mb-4">
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search projects..."
+              className={`w-full md:w-1/3 px-3 py-2 rounded border text-sm mb-3 ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
+            />
+          </div>
           <div className="flex flex-wrap gap-3 mb-8">
             {allTechs.map(tech => (
               <button
@@ -420,14 +479,24 @@ export default function Portfolio() {
                 onClick={() => setSelectedProject(p)}
               >
                 <div className="relative">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="h-40 w-full object-cover transition group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-70 transition" />
-                </div>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
+                    aria-label={favorites.includes(p.id) ? "Unfavorite" : "Favorite"}
+                    className={`absolute top-2 right-2 z-20 p-2 rounded-full transition
+                      ${favorites.includes(p.id) ? "bg-red-100 text-red-600" : "bg-white/90 text-gray-600 dark:bg-gray-800 dark:text-gray-300"}
+                      hover:scale-105`}
+                  >
+                    {favorites.includes(p.id) ? <FaHeart /> : <FaRegHeart />}
+                  </button>
+                   <img
+                     src={p.image}
+                     alt={p.title}
+                     className="h-40 w-full object-cover transition group-hover:scale-105"
+                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
+                     loading="lazy"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-70 transition" />
+                 </div>
                 <div className="p-5 flex flex-col gap-3 flex-1">
                   <h3 className="font-semibold text-lg">{p.title}</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{p.description}</p>
@@ -469,6 +538,63 @@ export default function Portfolio() {
           </div>
         </section>
 
+        {/* Education */}
+        <section
+          ref={sections.education}
+          data-section="education"
+          className="max-w-6xl mx-auto px-4 py-20"
+        >
+          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
+            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Education
+          </h2>
+          <ol className="relative border-l-2 border-indigo-400 ml-4">
+            <motion.li
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              className="mb-10 ml-6"
+            >
+              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+              </span>
+              <h3 className="font-semibold text-lg">Avanthi Institute of Engineering and Technology</h3>
+              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">B.Tech in Computer Science — Oct 2022 – Jul 2025</time>
+              <p className="text-sm text-gray-700 dark:text-gray-300">Focused on algorithms, data structures, and distributed systems projects.</p>
+            </motion.li>
+
+            <motion.li
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              className="mb-10 ml-6"
+            >
+              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+              </span>
+              <h3 className="font-semibold text-lg">Teegala Krishna Reddy Engineering College</h3>
+              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">Diploma in Electronics & Communication Engineering — Jun 2019 – Jun 2022</time>
+              <p className="text-sm text-gray-700 dark:text-gray-300">Completed diploma coursework with practical labs in embedded systems and signals.</p>
+            </motion.li>
+
+            <motion.li
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.16 }}
+              className="mb-10 ml-6"
+            >
+              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+              </span>
+              <h3 className="font-semibold text-lg">SR Digi School</h3>
+              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">Secondary School Certificate — Jun 2013 – Jun 2019</time>
+              <p className="text-sm text-gray-700 dark:text-gray-300">Completed secondary education with emphasis on math and science.</p>
+            </motion.li>
+          </ol>
+        </section>
+
         {/* Contact */}
         <section
           ref={sections.contact}
@@ -488,42 +614,47 @@ export default function Portfolio() {
               <ul className="space-y-2 text-sm">
                 <li>
                   Email:{" "}
-                  <a href="mailto:yadlasunny143@gmail.com" className="underline decoration-indigo-500">
+                  <a
+                    href="mailto:yadlasunny143@gmail.com"
+                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
+                  >
                     yadlasunny143@gmail.com
                   </a>
                 </li>
                 <li>
                   LinkedIn:{" "}
-                  <a href="https://linkedin.com/in/yadla-sunny" className="underline decoration-indigo-500">
+                  <a
+                    href="https://linkedin.com/in/yadla-sunny"
+                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     linkedin.com/in/yadla-sunny
                   </a>
                 </li>
                 <li>
                   GitHub:{" "}
-                  <a href="https://github.com/Yadlasunny" className="underline decoration-indigo-500">
+                  <a
+                    href="https://github.com/Yadlasunny"
+                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     github.com/Yadlasunny
                   </a>
                 </li>
               </ul>
             </div>
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                emailjs.sendForm('service_id', 'template_id', e.target, 'user_id')
-                  .then((result) => {
-                      alert("Message sent successfully.");
-                      e.target.reset();
-                  }, (error) => {
-                      alert("Error sending message. Please try again later.");
-                  });
-              }}
+              onSubmit={sendEmail}
               className="space-y-4"
             >
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold uppercase tracking-wide">Name</label>
+                <label htmlFor="from_name" className="text-xs font-semibold uppercase tracking-wide">Name</label>
                 <input
+                  id="from_name"
                   required
-                  name="name"
+                  name="from_name"
                   className={`px-3 py-2 rounded border text-sm ${
                     dark
                       ? "bg-gray-950 border-gray-700 focus:border-indigo-500"
@@ -532,11 +663,12 @@ export default function Portfolio() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold uppercase tracking-wide">Email</label>
+                <label htmlFor="from_email" className="text-xs font-semibold uppercase tracking-wide">Email</label>
                 <input
+                  id="from_email"
                   required
                   type="email"
-                  name="email"
+                  name="from_email"
                   className={`px-3 py-2 rounded border text-sm ${
                     dark
                       ? "bg-gray-950 border-gray-700 focus:border-indigo-500"
@@ -545,8 +677,9 @@ export default function Portfolio() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold uppercase tracking-wide">Message</label>
+                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">Message</label>
                 <textarea
+                  id="message"
                   required
                   name="message"
                   rows={4}
@@ -557,13 +690,19 @@ export default function Portfolio() {
                   } outline-none transition`}
                 />
               </div>
+              {formStatus && (
+                <div className={`text-sm ${formStatus.type === "success" ? "text-green-600" : "text-red-600"}`}>
+                  {formStatus.text}
+                </div>
+              )}
               <button
                 type="submit"
-                className="w-full py-3 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition"
+                disabled={sending}
+                className={`w-full py-3 rounded-md ${sending ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-500"} text-white font-medium transition`}
               >
-                Send
+                {sending ? "Sending..." : "Send"}
               </button>
-            </form>
+             </form>
           </div>
         </section>
 
@@ -579,7 +718,7 @@ export default function Portfolio() {
             </div>
             <div className="p-6 rounded-lg border bg-white dark:bg-gray-900 dark:border-gray-800 border-gray-200">
               <p className="italic">"Great attention to detail and always ready to help the team."</p>
-              <div className="mt-4 font-semibold">– John Smith, Tech Lead at StartupX</div>
+              <div className="mt-4 font-semibold">– Kavali Vishal, Co-Founder of NirvionX</div>
             </div>
           </div>
         </section>
@@ -616,7 +755,7 @@ export default function Portfolio() {
       {/* Project Modal */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className={`max-w-lg w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative`}>
+          <div className={`max-w-lg w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl font-bold text-gray-400 hover:text-indigo-600"
@@ -624,8 +763,17 @@ export default function Portfolio() {
             >
               &times;
             </button>
-            <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-48 object-cover rounded mb-4" />
+            <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-48 object-cover rounded mb-4" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = placeholder; }} />
             <h3 className="text-2xl font-bold mb-2">{selectedProject.title}</h3>
+            <button
+              onClick={() => toggleFavorite(selectedProject.id)}
+              aria-label={favorites.includes(selectedProject.id) ? "Unfavorite project" : "Favorite project"}
+              className={`ml-3 inline-flex items-center gap-2 text-sm px-2 py-1 rounded ${
+                favorites.includes(selectedProject.id) ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-700"
+              }`}
+            >
+              {favorites.includes(selectedProject.id) ? <FaHeart /> : <FaRegHeart />} Favorite
+            </button>
             <p className="mb-4">{selectedProject.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {selectedProject.tech.map(t => (
@@ -655,6 +803,13 @@ export default function Portfolio() {
           <FaTwitter size={20} />
         </a>
       </div>
+
+      {/* toast */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded shadow-lg">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
