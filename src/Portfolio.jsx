@@ -8,6 +8,33 @@ import agroInformatics from "./assets/agro-informatics.jpg";
 // use placeholder placed in public/assets/placeholder.jpg
 const placeholder = "/assets/placeholder.jpg";
 
+// --- Typing effect hook ---
+function useTypingEffect(words, speed = 80, pause = 1200) {
+  const [display, setDisplay] = useState("");
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    if (index >= words.length) setIndex(0);
+    if (!deleting && subIndex === words[index].length) {
+      const timeout = setTimeout(() => setDeleting(true), pause);
+      return () => clearTimeout(timeout);
+    }
+    if (deleting && subIndex === 0) {
+      setDeleting(false);
+      setIndex(i => (i + 1) % words.length);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      setSubIndex(subIndex + (deleting ? -1 : 1));
+      setDisplay(words[index].substring(0, subIndex + (deleting ? -1 : 1)));
+    }, deleting ? speed / 2 : speed);
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, deleting, words, speed, pause]);
+  return display;
+}
+
 export default function Portfolio() {
   const [dark, setDark] = useState(() => localStorage.getItem("theme") === "dark");
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -26,6 +53,8 @@ export default function Portfolio() {
       return [];
     }
   });
+  // --- Project Sorting ---
+  const [sortBy, setSortBy] = useState("date"); // "date" | "tech" | "favorites"
 
   const sections = {
     home: useRef(null),
@@ -57,6 +86,7 @@ export default function Portfolio() {
       live: "#",
       repo: "#",
       image: agroInformatics, // changed to use the imported asset
+      date: "2025-01-01",
     },
     {
       id: 2,
@@ -75,6 +105,7 @@ export default function Portfolio() {
       live: "#",
       repo: "#",
       image: facialExpression,
+      date: "2025-07-01",
     },
   ];
 
@@ -122,12 +153,37 @@ export default function Portfolio() {
     [projects]
   );
 
+  // --- Typing effect for hero headline ---
+  const typingWords = [
+    "Building clean, performant React interfaces.",
+    "Delivering accessible, modern web apps.",
+    "Crafting scalable component libraries.",
+  ];
+  const typedHeadline = useTypingEffect(typingWords);
+
+  // --- Project Sorting Logic ---
+  const sortedProjects = useMemo(() => {
+    let arr = [...projects];
+    if (sortBy === "date") {
+      arr.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortBy === "favorites") {
+      arr.sort((a, b) => {
+        const aFav = favorites.includes(a.id) ? 1 : 0;
+        const bFav = favorites.includes(b.id) ? 1 : 0;
+        return bFav - aFav;
+      });
+    } else if (sortBy === "tech") {
+      arr.sort((a, b) => (a.tech[0] || "").localeCompare(b.tech[0] || ""));
+    }
+    return arr;
+  }, [projects, sortBy, favorites]);
+
   const filteredProjects = useMemo(
     () =>
-      projects
+      sortedProjects
         .filter(p => projectFilter === "All" || p.tech.includes(projectFilter))
         .filter(p => !searchTerm || p.title.toLowerCase().includes(searchTerm.toLowerCase())),
-    [projects, projectFilter, searchTerm]
+    [sortedProjects, projectFilter, searchTerm]
   );
 
   useEffect(() => {
@@ -212,12 +268,23 @@ export default function Portfolio() {
 
   return (
     <div className={`font-sans ${dark ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"} min-h-screen`}>
+      {/* Accessibility: Skip to content */}
+      <a
+        href="#main-content"
+        className="absolute left-2 top-2 z-50 px-4 py-2 bg-indigo-600 text-white rounded focus:top-2 focus:left-2 focus:z-50 focus:outline-none sr-only focus:not-sr-only"
+        tabIndex={0}
+      >
+        Skip to main content
+      </a>
       {/* Navbar */}
-      <header className={`fixed top-0 inset-x-0 z-50 backdrop-blur border-b ${dark ? "border-gray-800 bg-gray-950/70" : "border-gray-200 bg-white/70"}`}>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 backdrop-blur border-b ${dark ? "border-gray-800 bg-gray-950/70" : "border-gray-200 bg-white/70"}`}
+        aria-label="Main navigation"
+      >
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
           <div className="font-bold text-lg tracking-wide">Yadla Sunny</div>
           <nav className="hidden md:flex gap-6">
-            {["home", "about", "skills", "experience", "projects", "contact"].map(item => (
+            {["home", "about", "skills", "experience", "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
@@ -257,7 +324,7 @@ export default function Portfolio() {
         </div>
         {mobileMenu && (
           <div className={`md:hidden px-4 pb-4 space-y-2 ${dark ? "bg-gray-950" : "bg-white"}`}>
-            {["home", "about", "skills", "experience", "projects", "contact"].map(item => (
+            {["home", "about", "skills", "experience", "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
@@ -279,16 +346,18 @@ export default function Portfolio() {
       </header>
 
       {/* Main content */}
-      <main className="pt-20">
+      <main className="pt-20" id="main-content" tabIndex={-1} aria-label="Main content">
         {/* Hero / Home */}
         <section
           ref={sections.home}
           data-section="home"
           className="max-w-6xl mx-auto px-4 py-24 flex flex-col md:flex-row gap-14 items-center"
+          aria-label="Home section"
         >
           <div className="flex-1 space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              Building clean, performant React interfaces.
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight" aria-live="polite">
+              {typedHeadline}
+              <span className="border-r-2 border-indigo-600 animate-pulse ml-1" aria-hidden="true"></span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-xl">
               I focus on component architecture, accessibility, and smooth developer experience.
@@ -435,17 +504,31 @@ export default function Portfolio() {
           ref={sections.projects}
           data-section="projects"
           className="max-w-6xl mx-auto px-4 py-20"
+          aria-label="Projects section"
         >
           <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
             <span className="h-8 w-1.5 rounded bg-indigo-600" /> Projects
           </h2>
-          {/* Filter Bar */}
-          <div className="mb-4">
+          {/* --- Project Sorting Bar --- */}
+          <div className="flex flex-wrap gap-4 mb-4 items-center">
+            <label className="text-sm font-medium" htmlFor="sortProjects">Sort by:</label>
+            <select
+              id="sortProjects"
+              value={sortBy}
+              onChange={e => setSortBy(e.target.value)}
+              className={`px-3 py-2 rounded border text-sm ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
+              aria-label="Sort projects"
+            >
+              <option value="date">Date</option>
+              <option value="tech">Tech</option>
+              <option value="favorites">Favorites</option>
+            </select>
             <input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search projects..."
-              className={`w-full md:w-1/3 px-3 py-2 rounded border text-sm mb-3 ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
+              className={`w-full md:w-1/3 px-3 py-2 rounded border text-sm ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
+              aria-label="Search projects"
             />
           </div>
           <div className="flex flex-wrap gap-3 mb-8">
@@ -460,6 +543,7 @@ export default function Portfolio() {
                     ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-indigo-500"
                     : "bg-white border-gray-300 text-gray-700 hover:border-indigo-600"
                 }`}
+                aria-pressed={projectFilter === tech}
               >
                 {tech}
               </button>
@@ -477,6 +561,8 @@ export default function Portfolio() {
                   dark ? "border-gray-800 bg-gray-900" : "border-gray-200 bg-white"
                 }`}
                 onClick={() => setSelectedProject(p)}
+                tabIndex={0}
+                aria-label={`Project: ${p.title}`}
               >
                 <div className="relative">
                   <button
@@ -754,8 +840,11 @@ export default function Portfolio() {
 
       {/* Project Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className={`max-w-lg w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal}>
+          <div
+            className={`max-w-lg w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative`}
+            onClick={e => e.stopPropagation()}
+          >
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl font-bold text-gray-400 hover:text-indigo-600"
@@ -763,7 +852,15 @@ export default function Portfolio() {
             >
               &times;
             </button>
-            <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-48 object-cover rounded mb-4" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = placeholder; }} />
+            <img
+              src={selectedProject.image}
+              alt={selectedProject.title}
+              className="w-full h-48 object-cover rounded mb-4"
+              onError={e => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = placeholder;
+              }}
+            />
             <h3 className="text-2xl font-bold mb-2">{selectedProject.title}</h3>
             <button
               onClick={() => toggleFavorite(selectedProject.id)}
