@@ -5,6 +5,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaHeart, FaRegHeart } from "react-icon
 import emailjs from "@emailjs/browser";
 import facialExpression from "./assets/facial-expression.jpg";
 import agroInformatics from "./assets/agro-informatics.jpg";
+import aiTextSummarizer from "./assets/AI-Text-Summarizer.jpg";
 // use placeholder placed in public/assets/placeholder.jpg
 const placeholder = "/assets/placeholder.jpg";
 
@@ -60,7 +61,6 @@ export default function Portfolio() {
     home: useRef(null),
     about: useRef(null),
     skills: useRef(null),
-    experience: useRef(null), // NEW
     education: useRef(null),
     projects: useRef(null),
     contact: useRef(null),
@@ -85,7 +85,7 @@ export default function Portfolio() {
       tech: ["Python", "Spark", "Hadoop", "NumPy", "Pandas", "Scikit-learn"],
       live: "#",
       repo: "#",
-      image: agroInformatics, // changed to use the imported asset
+      image: agroInformatics,
       date: "2025-01-01",
     },
     {
@@ -107,19 +107,70 @@ export default function Portfolio() {
       image: facialExpression,
       date: "2025-07-01",
     },
+    {
+      id: 3,
+      title: "AI Text Summarizer ",
+      description: (
+        <>
+          <div className="mb-2 text-xs text-gray-500">May 2025</div>
+          <ul className="list-disc list-inside text-sm mb-2">
+            <li>Designed and implemented a Python/Flask full-stack web application providing high-quality abstractive summarization for user text inputs.</li>
+            <li>Integrated the Hugging Face Transformers library, utilizing the distilbart-cnn-12-6 model (an LLM-based architecture) for state-of-the-art results.</li>
+            <li>Demonstrated API workflow management by handling text input, processing with PyTorch/GPU backend, and returning the structured output.</li>
+          </ul>
+          <div className="text-xs text-gray-400">Tools: Python, Flask, Hugging Face Transformers, PyTorch, HTML/CSS/JS</div>
+        </>
+      ),
+      tech: ["Python", "Flask", "Hugging Face Transformers", "PyTorch", "HTML", "CSS", "JavaScript"],
+      live: "#",
+      repo: "#",
+      image: aiTextSummarizer,
+      date: "2025-05-01",
+    },
+    {
+      id: 4,
+      title: "To-Do List Application ",
+      description: (
+        <>
+          <div className="mb-2 text-xs text-gray-500">Jul 2025</div>
+          <ul className="list-disc list-inside text-sm mb-2">
+            <li>Responsive single-page application built with React and TypeScript to showcase proficiency in modern frontend development and state management.</li>
+            <li>Implemented core CRUD functionality to manage tasks, demonstrating component-based architecture and user-friendly interaction design.</li>
+          </ul>
+          <div className="text-xs text-gray-400">Tools: React, TypeScript, HTML, CSS</div>
+        </>
+      ),
+      tech: ["React", "TypeScript", "HTML", "CSS"],
+      live: "#",
+      repo: "#",
+      image: placeholder,
+      date: "2025-07-15",
+    },
   ];
 
   const skills = [
     {
       group: "Frontend",
       items: [
-        "React", "TypeScript", "Redux Toolkit", "Tailwind CSS", "HTML", "CSS", "JavaScript", "Vite"
+        "React", "TypeScript", "Redux Toolkit", "Tailwind CSS", "HTML", "CSS", "JavaScript"
       ]
     },
     {
       group: "Backend",
       items: [
-        "Node.js"
+        "Node.js", "Flask", "API Integration (REST/JSON)"
+      ]
+    },
+    {
+      group: "AI/ML & Data",
+      items: [
+        "Hugging Face Transformers", "PyTorch", "Scikit-learn", "OpenCV", "Spark", "Hadoop", "Pandas", "NumPy"
+      ]
+    },
+    {
+      group: "Databases",
+      items: [
+        "PostgreSQL", "MongoDB"
       ]
     },
     {
@@ -129,21 +180,9 @@ export default function Portfolio() {
       ]
     },
     {
-      group: "Databases",
-      items: [
-        "MySQL", "MongoDB"
-      ]
-    },
-    {
       group: "Tools & Platforms",
       items: [
-        "Git", "Docker", "Google Colab", "VS Code", "Eclipse", "Jupyter"
-      ]
-    },
-    {
-      group: "Libraries & Frameworks",
-      items: [
-        "Pandas", "NumPy", "Matplotlib", "Seaborn"
+        "Git", "Docker", "Google Colab", "VS Code", "Jupyter"
       ]
     }
   ];
@@ -284,7 +323,7 @@ export default function Portfolio() {
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
           <div className="font-bold text-lg tracking-wide">Yadla Sunny</div>
           <nav className="hidden md:flex gap-6">
-            {["home", "about", "skills", "experience", "education", "projects", "contact"].map(item => (
+            {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
@@ -324,7 +363,7 @@ export default function Portfolio() {
         </div>
         {mobileMenu && (
           <div className={`md:hidden px-4 pb-4 space-y-2 ${dark ? "bg-gray-950" : "bg-white"}`}>
-            {["home", "about", "skills", "experience", "education", "projects", "contact"].map(item => (
+            {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
@@ -362,27 +401,32 @@ export default function Portfolio() {
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-xl">
               I focus on component architecture, accessibility, and smooth developer experience.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-8">
               <button
                 onClick={() => scrollTo("projects")}
-                className="px-6 py-3 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition"
+                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition
+                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
+                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
               >
-                View Projects
+                Projects
               </button>
+
               <button
                 onClick={() => scrollTo("contact")}
-                className={`px-6 py-3 rounded-md font-medium border transition ${
-                  dark
-                    ? "border-gray-700 hover:border-indigo-500"
-                    : "border-gray-300 hover:border-indigo-600"
-                }`}
+                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition
+                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
+                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
+                  
               >
                 Contact
               </button>
               <a
-                href="/resume.pdf"
-                download="Resume"
-                className="ml-4 px-4 py-2 rounded bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition"
+                href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition flex items-center justify-center
+                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
+                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
               >
                 Resume
               </a>
@@ -468,35 +512,6 @@ export default function Portfolio() {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Experience */}
-        <section
-          ref={sections.experience}
-          data-section="experience"
-          className="max-w-6xl mx-auto px-4 py-20"
-        >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Experience
-          </h2>
-          <ol className="relative border-l-2 border-indigo-400 ml-4">
-            <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-              </span>
-              <h3 className="font-semibold text-lg">Frontend Developer, Example Corp</h3>
-              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">2023 - Present</time>
-              <p className="text-sm text-gray-700 dark:text-gray-300">Built and maintained React-based dashboards for analytics products.</p>
-            </li>
-            <li className="mb-10 ml-6">
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-              </span>
-              <h3 className="font-semibold text-lg">Intern, StartupX</h3>
-              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">2022 - 2023</time>
-              <p className="text-sm text-gray-700 dark:text-gray-300">Worked on UI components and API integration for SaaS platform.</p>
-            </li>
-          </ol>
         </section>
 
         {/* Projects */}
