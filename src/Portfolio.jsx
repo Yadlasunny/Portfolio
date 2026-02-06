@@ -757,30 +757,6 @@ export default function Portfolio() {
                     ? "bg-gradient-to-b from-indigo-500 to-blue-500"
                     : "bg-gradient-to-b from-emerald-500 to-teal-500"
                 }`} />
-                <div className="flex flex-col lg:flex-row">
-                  {/* Project Image */}
-                  <div className="relative lg:w-80 xl:w-96 flex-shrink-0">
-                    <div className="aspect-video lg:aspect-auto lg:h-full relative overflow-hidden">
-                      <img
-                        src={p.image}
-                        alt={`${p.title} project screenshot`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
-                        loading="lazy"
-                      />
-                      <div className={`absolute inset-0 ${dark ? "bg-gradient-to-r lg:bg-gradient-to-l from-gray-900/0 via-gray-900/0 to-gray-900/80" : "bg-gradient-to-r lg:bg-gradient-to-l from-white/0 via-white/0 to-white/80"} hidden lg:block`} />
-                    </div>
-                    {/* Favorite button - reduced prominence */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
-                      aria-label={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
-                      className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-200 opacity-60 hover:opacity-100
-                        ${favorites.includes(p.id) ? "bg-red-500/90 text-white" : dark ? "bg-gray-900/60 text-gray-400 hover:text-white" : "bg-white/70 text-gray-400 hover:text-red-500"}
-                        hover:scale-110 active:scale-95`}
-                    >
-                      {favorites.includes(p.id) ? <FaHeart size={12} /> : <FaRegHeart size={12} />}
-                    </button>
-                  </div>
 
                   {/* Project Content */}
                   <div className="flex-1 p-5 sm:p-6 lg:p-8 flex flex-col">
@@ -861,7 +837,7 @@ export default function Portfolio() {
                     <div className="flex flex-wrap gap-3 mt-auto pt-2">
                       <a
                         href={p.repo}
-                        className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] flex-1 sm:flex-none min-h-[48px] sm:min-h-0"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] min-h-[48px] sm:min-h-0"
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
@@ -869,20 +845,8 @@ export default function Portfolio() {
                         <FaGithub size={18} className="sm:w-4 sm:h-4" />
                         View Code
                       </a>
-                      <button
-                        onClick={() => setSelectedProject(p)}
-                        className={`inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-medium transition-all duration-200 min-h-[48px] sm:min-h-0 ${
-                          dark 
-                            ? "text-gray-400 hover:text-gray-200 hover:bg-gray-800 border border-gray-700" 
-                            : "text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-200"
-                        } active:scale-[0.98]`}
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        Details
-                      </button>
                     </div>
                   </div>
-                </div>
               </motion.article>
             ))}
           </div>
