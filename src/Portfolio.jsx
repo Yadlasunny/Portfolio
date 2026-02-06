@@ -306,28 +306,28 @@ export default function Portfolio() {
   }
 
   return (
-    <div className={`font-sans ${dark ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"} min-h-screen`}>
+    <div className={`font-sans antialiased ${dark ? "bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-gray-100" : "bg-gradient-to-b from-slate-50 via-white to-slate-50 text-gray-900"} min-h-screen transition-colors duration-300`}>
       {/* Accessibility: Skip to content */}
       <a
         href="#main-content"
-        className="absolute left-2 top-2 z-50 px-4 py-2 bg-indigo-600 text-white rounded focus:top-2 focus:left-2 focus:z-50 focus:outline-none sr-only focus:not-sr-only"
+        className="absolute left-2 top-2 z-50 px-4 py-2 bg-indigo-600 text-white rounded-lg focus:top-2 focus:left-2 focus:z-50 focus:outline-none focus:ring-2 focus:ring-indigo-400 sr-only focus:not-sr-only transition-all"
         tabIndex={0}
       >
         Skip to main content
       </a>
       {/* Navbar */}
       <header
-        className={`fixed top-0 inset-x-0 z-50 backdrop-blur border-b ${dark ? "border-gray-800 bg-gray-950/70" : "border-gray-200 bg-white/70"}`}
+        className={`fixed top-0 inset-x-0 z-50 backdrop-blur-xl border-b transition-all duration-300 ${dark ? "border-gray-800/50 bg-gray-950/80" : "border-gray-200/50 bg-white/80"}`}
         aria-label="Main navigation"
       >
-        <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-          <div className="font-bold text-lg tracking-wide">Yadla Sunny</div>
-          <nav className="hidden md:flex gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-18">
+          <div className="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
+          <nav className="hidden md:flex gap-1">
             {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
-                className={`capitalize text-sm font-medium transition ${
+                className={`capitalize text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === item
                     ? dark
                       ? "text-indigo-400"
@@ -341,112 +341,178 @@ export default function Portfolio() {
               </button>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setDark(d => !d)}
-              className="p-2 rounded-md border text-sm font-medium transition
-              hover:scale-105 active:scale-95
-              dark:border-gray-700 dark:hover:border-indigo-500
-              border-gray-300 hover:border-indigo-600"
+              className={`p-2.5 rounded-xl text-sm font-medium transition-all duration-200
+              hover:scale-105 active:scale-95 ${dark ? "bg-gray-800 hover:bg-gray-700 text-yellow-400" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}
               aria-label="Toggle theme"
             >
-              {dark ? "Light" : "Dark"}
+              {dark ? "☀️" : "🌙"}
             </button>
             <button
               onClick={() => setMobileMenu(m => !m)}
-              className="md:hidden p-2 rounded border dark:border-gray-700 border-gray-300"
+              className={`md:hidden p-2.5 rounded-xl transition-all duration-200 ${dark ? "bg-gray-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-200"}`}
               aria-label="Toggle menu"
             >
-              ☰
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenu ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+              </svg>
             </button>
           </div>
         </div>
         {mobileMenu && (
-          <div className={`md:hidden px-4 pb-4 space-y-2 ${dark ? "bg-gray-950" : "bg-white"}`}>
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`md:hidden px-4 pb-4 space-y-1 border-t ${dark ? "bg-gray-950/95 border-gray-800" : "bg-white/95 border-gray-200"}`}
+          >
             {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
-                className={`block w-full text-left px-3 py-2 rounded text-sm ${
+                className={`block w-full text-left px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
                   activeSection === item
-                    ? dark
-                      ? "bg-indigo-600 text-white"
-                      : "bg-indigo-600 text-white"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
                     : dark
-                      ? "hover:bg-gray-800"
-                      : "hover:bg-gray-100"
+                      ? "text-gray-300 hover:bg-gray-800 active:bg-gray-700"
+                      : "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
                 }`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </button>
             ))}
-          </div>
-        )}
-      </header>
-
-      {/* Main content */}
-      <main className="pt-20" id="main-content" tabIndex={-1} aria-label="Main content">
-        {/* Hero / Home */}
-        <section
-          ref={sections.home}
-          data-section="home"
-          className="max-w-6xl mx-auto px-4 py-24 flex flex-col md:flex-row gap-14 items-center"
-          aria-label="Home section"
-        >
-          <div className="flex-1 space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight" aria-live="polite">
-              {typedHeadline}
-              <span className="border-r-2 border-indigo-600 animate-pulse ml-1" aria-hidden="true"></span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-xl">
-              I focus on component architecture, accessibility, and smooth developer experience.
-            </p>
-            <div className="flex gap-4 mt-8">
-              <button
-                onClick={() => scrollTo("projects")}
-                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition
-                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
-                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
-              >
-                Projects
-              </button>
-
-              <button
-                onClick={() => scrollTo("contact")}
-                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition
-                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
-                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
-                  
-              >
-                Contact
-              </button>
+            {/* Quick actions for mobile */}
+            <div className="pt-3 mt-2 border-t border-gray-200 dark:border-gray-800">
               <a
                 href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-8 py-3 rounded-lg font-semibold text-base min-w-[150px] transition flex items-center justify-center
-                  ${dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-500 text-white hover:bg-indigo-600"}
-                  hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95`}
+                className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
               >
-                Resume
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                Download Resume
               </a>
             </div>
+          </motion.div>
+        )}
+      </header>
+
+      {/* Main content */}
+      <main className="pt-16 md:pt-20" id="main-content" tabIndex={-1} aria-label="Main content">
+        {/* Hero / Home */}
+        <section
+          ref={sections.home}
+          data-section="home"
+          className="relative min-h-[90vh] md:min-h-[85vh] flex items-center overflow-hidden"
+          aria-label="Home section"
+        >
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className={`absolute top-20 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${dark ? "bg-indigo-600" : "bg-indigo-400"}`} />
+            <div className={`absolute -bottom-20 -left-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${dark ? "bg-purple-600" : "bg-purple-400"}`} />
           </div>
-          <div className="flex-1 w-full">
-            <div
-              className={`rounded-xl p-10 border relative overflow-hidden ${
-                dark ? "border-gray-800 bg-gradient-to-br from-gray-900 to-gray-800" : "border-gray-200 bg-gradient-to-br from-white to-gray-100"
-              }`}
-            >
-              <div className="absolute inset-0 pointer-events-none opacity-10 bg-[radial-gradient(circle_at_30%_30%,#6366f1,transparent_60%)]" />
-              <p className="text-sm uppercase tracking-wider font-semibold mb-4 opacity-70">
-                Summary
-              </p>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Frontend developer specializing in modern React (hooks, performance, state management) with experience
-                in building scalable component libraries and integrating REST APIs.
-              </p>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col lg:flex-row gap-10 lg:gap-16 items-center relative z-10 w-full">
+            <div className="flex-1 space-y-6 md:space-y-8 text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${dark ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" : "bg-indigo-50 text-indigo-600 border border-indigo-100"}`}>
+                  👋 Welcome to my portfolio
+                </span>
+              </motion.div>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[5rem]" 
+                aria-live="polite"
+              >
+                <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  {typedHeadline}
+                </span>
+                <span className="inline-block w-0.5 h-8 md:h-10 bg-indigo-600 animate-pulse ml-1 align-middle" aria-hidden="true"></span>
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className={`text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}
+              >
+                I focus on component architecture, accessibility, and smooth developer experience.
+              </motion.p>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-4"
+              >
+                <button
+                  onClick={() => scrollTo("projects")}
+                  className="group px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300
+                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white
+                    hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5
+                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95"
+                >
+                  View Projects
+                  <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
+                </button>
+
+                <button
+                  onClick={() => scrollTo("contact")}
+                  className={`px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300
+                    ${dark ? "bg-gray-800 text-gray-100 hover:bg-gray-700 border border-gray-700" : "bg-white text-gray-900 hover:bg-gray-50 border border-gray-200"}
+                    hover:shadow-lg hover:-translate-y-0.5
+                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95`}
+                >
+                  Contact Me
+                </button>
+                <a
+                  href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2
+                    ${dark ? "bg-gray-800 text-gray-100 hover:bg-gray-700 border border-gray-700" : "bg-white text-gray-900 hover:bg-gray-50 border border-gray-200"}
+                    hover:shadow-lg hover:-translate-y-0.5
+                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                  Resume
+                </a>
+              </motion.div>
             </div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex-1 w-full max-w-lg lg:max-w-none"
+            >
+              <div
+                className={`rounded-2xl p-6 sm:p-8 md:p-10 border relative overflow-hidden backdrop-blur-sm ${
+                  dark ? "border-gray-800/50 bg-gray-900/50" : "border-gray-200/50 bg-white/50"
+                } shadow-xl`}
+              >
+                <div className="absolute inset-0 pointer-events-none opacity-30 bg-[radial-gradient(circle_at_30%_30%,#6366f1,transparent_60%)]" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                  </div>
+                  <p className={`text-xs uppercase tracking-widest font-semibold mb-4 ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
+                    Summary
+                  </p>
+                  <p className={`leading-relaxed text-sm sm:text-base ${dark ? "text-gray-300" : "text-gray-700"}`}>
+                    Frontend developer specializing in modern React (hooks, performance, state management) with experience
+                    in building scalable component libraries and integrating REST APIs.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -454,30 +520,60 @@ export default function Portfolio() {
         <section
           ref={sections.about}
           data-section="about"
-          className="max-w-6xl mx-auto px-4 py-20 space-y-10"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 space-y-10 md:space-y-14"
         >
-          <h2 className="text-3xl font-bold flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> About Me
-          </h2>
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className={`p-6 rounded-lg border ${dark ? "border-gray-800 bg-gray-900" : "border-gray-200 bg-white"} space-y-4`}>
-              <h3 className="font-semibold text-lg">Focus Areas</h3>
-              <ul className="space-y-2 text-sm leading-relaxed">
-                <li>Component design systems & reusable patterns.</li>
-                <li>Accessibility (ARIA roles, keyboard navigation).</li>
-                <li>Performance (lazy loading, memoization, code-splitting).</li>
-                <li>State management strategy and data fetching.</li>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center md:text-left"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              About Me
+            </h2>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+              Get to know my focus areas and the values I bring to every project.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-xl ${dark ? "border-gray-800/50 bg-gray-900/50 hover:border-indigo-500/30" : "border-gray-200/50 bg-white hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${dark ? "bg-indigo-500/10" : "bg-indigo-50"}`}>
+                <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+              </div>
+              <h3 className="font-semibold text-lg sm:text-xl mb-4">Focus Areas</h3>
+              <ul className="space-y-3 text-sm sm:text-base leading-relaxed">
+                <li className="flex items-start gap-3"><span className="text-indigo-500 mt-1">▹</span>Component design systems & reusable patterns.</li>
+                <li className="flex items-start gap-3"><span className="text-indigo-500 mt-1">▹</span>Accessibility (ARIA roles, keyboard navigation).</li>
+                <li className="flex items-start gap-3"><span className="text-indigo-500 mt-1">▹</span>Performance (lazy loading, memoization, code-splitting).</li>
+                <li className="flex items-start gap-3"><span className="text-indigo-500 mt-1">▹</span>State management strategy and data fetching.</li>
               </ul>
-            </div>
-            <div className={`p-6 rounded-lg border ${dark ? "border-gray-800 bg-gray-900" : "border-gray-200 bg-white"} space-y-4`}>
-              <h3 className="font-semibold text-lg">Values</h3>
-              <p className="text-sm leading-relaxed">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-xl ${dark ? "border-gray-800/50 bg-gray-900/50 hover:border-indigo-500/30" : "border-gray-200/50 bg-white hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${dark ? "bg-purple-500/10" : "bg-purple-50"}`}>
+                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+              </div>
+              <h3 className="font-semibold text-lg sm:text-xl mb-4">Values</h3>
+              <p className={`text-sm sm:text-base leading-relaxed mb-4 ${dark ? "text-gray-300" : "text-gray-600"}`}>
                 Maintain readability, predictable architecture, and leverage tooling (TypeScript, ESLint, Prettier) to keep code quality high.
               </p>
-              <p className="text-sm leading-relaxed">
+              <p className={`text-sm sm:text-base leading-relaxed ${dark ? "text-gray-300" : "text-gray-600"}`}>
                 Deliver interfaces that feel fast and intuitive while staying maintainable for teams.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -485,32 +581,50 @@ export default function Portfolio() {
         <section
           ref={sections.skills}
           data-section="skills"
-          className="max-w-6xl mx-auto px-4 py-20"
+          className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
         >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Skills
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {skills.map(s => (
-              <div
-                key={s.group}
-                className={`rounded-lg border p-6 ${dark ? "border-gray-800 bg-gray-900" : "border-gray-200 bg-white"}`}
-              >
-                <h3 className="font-semibold mb-4">{s.group}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {s.items.map(item => (
-                    <span
-                      key={item}
-                      className={`text-xs px-2.5 py-1 rounded-full border ${
-                        dark ? "border-gray-700 bg-gray-800" : "border-gray-300 bg-gray-100"
-                      }`}
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10 md:mb-14"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center justify-center gap-3">
+                <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+                Skills & Technologies
+              </h2>
+              <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                Technologies and tools I work with to build modern web applications.
+              </p>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {skills.map((s, index) => (
+                <motion.div
+                  key={s.group}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`group rounded-2xl border p-5 sm:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "border-gray-800/50 bg-gray-900/80 hover:border-indigo-500/30" : "border-gray-200 bg-white hover:border-indigo-500/30"}`}
+                >
+                  <h3 className={`font-semibold text-base sm:text-lg mb-4 pb-3 border-b ${dark ? "border-gray-800 text-indigo-400" : "border-gray-100 text-indigo-600"}`}>{s.group}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {s.items.map(item => (
+                      <span
+                        key={item}
+                        className={`text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${
+                          dark ? "bg-gray-800 text-gray-300 hover:bg-indigo-500/20 hover:text-indigo-300" : "bg-gray-100 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                        }`}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -518,45 +632,61 @@ export default function Portfolio() {
         <section
           ref={sections.projects}
           data-section="projects"
-          className="max-w-6xl mx-auto px-4 py-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
           aria-label="Projects section"
         >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Projects
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center md:text-left mb-10 md:mb-14"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              Featured Projects
+            </h2>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+              A selection of my recent work and personal projects.
+            </p>
+          </motion.div>
           {/* --- Project Sorting Bar --- */}
-          <div className="flex flex-wrap gap-4 mb-4 items-center">
-            <label className="text-sm font-medium" htmlFor="sortProjects">Sort by:</label>
-            <select
-              id="sortProjects"
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value)}
-              className={`px-3 py-2 rounded border text-sm ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
-              aria-label="Sort projects"
-            >
-              <option value="date">Date</option>
-              <option value="tech">Tech</option>
-              <option value="favorites">Favorites</option>
-            </select>
-            <input
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search projects..."
-              className={`w-full md:w-1/3 px-3 py-2 rounded border text-sm ${dark ? "bg-gray-900 border-gray-700 text-gray-200" : "bg-white border-gray-300 text-gray-800"}`}
-              aria-label="Search projects"
-            />
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6 items-stretch sm:items-center">
+            <div className="flex items-center gap-2">
+              <label className={`text-sm font-medium whitespace-nowrap ${dark ? "text-gray-300" : "text-gray-700"}`} htmlFor="sortProjects">Sort by:</label>
+              <select
+                id="sortProjects"
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
+                className={`px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${dark ? "bg-gray-900 border-gray-700 text-gray-200 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-800 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
+                aria-label="Sort projects"
+              >
+                <option value="date">Date</option>
+                <option value="tech">Tech</option>
+                <option value="favorites">Favorites</option>
+              </select>
+            </div>
+            <div className="flex-1 min-w-0">
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="🔍 Search projects..."
+                className={`w-full px-4 py-2.5 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900 border-gray-700 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
+                aria-label="Search projects"
+              />
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3 mb-8">
+          <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 justify-center md:justify-start">
             {allTechs.map(tech => (
               <button
                 key={tech}
                 onClick={() => setProjectFilter(tech)}
-                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${
+                className={`px-3 sm:px-4 py-2 sm:py-2 rounded-full border text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                   projectFilter === tech
-                    ? "bg-indigo-600 text-white border-indigo-600"
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-transparent shadow-md"
                     : dark
-                    ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-indigo-500"
-                    : "bg-white border-gray-300 text-gray-700 hover:border-indigo-600"
+                    ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-indigo-500 active:bg-gray-800"
+                    : "bg-white border-gray-200 text-gray-700 hover:border-indigo-500 active:bg-gray-50"
                 }`}
                 aria-pressed={projectFilter === tech}
               >
@@ -564,74 +694,80 @@ export default function Portfolio() {
               </button>
             ))}
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map(p => (
               <motion.div
                 key={p.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className={`group rounded-xl overflow-hidden border flex flex-col cursor-pointer ${
-                  dark ? "border-gray-800 bg-gray-900" : "border-gray-200 bg-white"
+                transition={{ duration: 0.5 }}
+                className={`group rounded-2xl overflow-hidden border flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl active:scale-[0.98] ${
+                  dark ? "border-gray-800 bg-gray-900/80 hover:border-indigo-500/30" : "border-gray-200 bg-white hover:border-indigo-500/30"
                 }`}
                 onClick={() => setSelectedProject(p)}
                 tabIndex={0}
-                aria-label={`Project: ${p.title}`}
+                role="button"
+                aria-label={`View details for ${p.title}`}
               >
-                <div className="relative">
+                <div className="relative overflow-hidden">
                   <button
                     onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
-                    aria-label={favorites.includes(p.id) ? "Unfavorite" : "Favorite"}
-                    className={`absolute top-2 right-2 z-20 p-2 rounded-full transition
-                      ${favorites.includes(p.id) ? "bg-red-100 text-red-600" : "bg-white/90 text-gray-600 dark:bg-gray-800 dark:text-gray-300"}
-                      hover:scale-105`}
+                    aria-label={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
+                    className={`absolute top-3 right-3 z-20 p-3 rounded-full transition-all duration-200 backdrop-blur-sm
+                      ${favorites.includes(p.id) ? "bg-red-500 text-white" : dark ? "bg-gray-800/90 text-gray-300" : "bg-white/90 text-gray-600"}
+                      hover:scale-110 active:scale-95`}
                   >
-                    {favorites.includes(p.id) ? <FaHeart /> : <FaRegHeart />}
+                    {favorites.includes(p.id) ? <FaHeart size={16} /> : <FaRegHeart size={16} />}
                   </button>
-                   <img
-                     src={p.image}
-                     alt={p.title}
-                     className="h-40 w-full object-cover transition group-hover:scale-105"
-                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
-                     loading="lazy"
-                   />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-70 transition" />
-                 </div>
-                <div className="p-5 flex flex-col gap-3 flex-1">
-                  <h3 className="font-semibold text-lg">{p.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{p.description}</p>
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {p.tech.map(t => (
+                  <img
+                    src={p.image}
+                    alt={`${p.title} project screenshot`}
+                    className="h-44 sm:h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
+                  <h3 className="font-bold text-base sm:text-lg leading-snug line-clamp-2">{p.title}</h3>
+                  <div className={`text-sm leading-relaxed flex-1 ${dark ? "text-gray-400" : "text-gray-600"}`}>{p.description}</div>
+                  <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
+                    {p.tech.slice(0, 3).map(t => (
                       <span
                         key={t}
-                        className={`text-[10px] uppercase tracking-wide font-medium px-2 py-1 rounded ${
-                          dark ? "bg-gray-800 text-gray-300" : "bg-gray-100 text-gray-700"
+                        className={`text-[11px] sm:text-xs font-semibold px-2 py-1 rounded-md ${
+                          dark ? "bg-indigo-500/15 text-indigo-400" : "bg-indigo-50 text-indigo-600"
                         }`}
                       >
                         {t}
                       </span>
                     ))}
+                    {p.tech.length > 3 && (
+                      <span className={`text-[11px] sm:text-xs font-medium px-2 py-1 rounded-md ${dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"}`}>+{p.tech.length - 3}</span>
+                    )}
                   </div>
                 </div>
-                <div className={`px-5 pb-5 flex gap-4 text-sm font-medium ${
-                  dark ? "text-indigo-400" : "text-indigo-600"
-                }`}>
+                <div className={`px-4 sm:px-5 py-3.5 flex gap-4 text-sm font-medium border-t ${dark ? "border-gray-800" : "border-gray-100"}`}>
                   <a
                     href={p.live}
-                    className="hover:underline"
+                    className={`flex items-center gap-1.5 py-1 transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    Live
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    Live Demo
                   </a>
                   <a
                     href={p.repo}
-                    className="hover:underline"
+                    className={`flex items-center gap-1.5 py-1 transition-colors ${dark ? "text-gray-400 hover:text-gray-300" : "text-gray-600 hover:text-gray-800"}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    Code
+                    <FaGithub size={14} />
+                    Source
                   </a>
                 </div>
               </motion.div>
@@ -643,183 +779,283 @@ export default function Portfolio() {
         <section
           ref={sections.education}
           data-section="education"
-          className="max-w-6xl mx-auto px-4 py-20"
+          className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
         >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Education
-          </h2>
-          <ol className="relative border-l-2 border-indigo-400 ml-4">
-            <motion.li
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
-              className="mb-10 ml-6"
+              transition={{ duration: 0.5 }}
+              className="text-center md:text-left mb-10 md:mb-14"
             >
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-              </span>
-              <h3 className="font-semibold text-lg">Avanthi Institute of Engineering and Technology</h3>
-              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">B.Tech in Computer Science — Oct 2022 – Jul 2025</time>
-              <p className="text-sm text-gray-700 dark:text-gray-300">Focused on algorithms, data structures, and distributed systems projects.</p>
-            </motion.li>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+                <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+                Education
+              </h2>
+              <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                My academic background and qualifications.
+              </p>
+            </motion.div>
+            <ol className="relative border-l-2 border-indigo-500/30 ml-2 sm:ml-4">
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 sm:mb-10 ml-6 sm:ml-8"
+              >
+                <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full ring-4 ring-indigo-500/20">
+                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                </span>
+                <div className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 hover:shadow-lg ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}>
+                  <h3 className="font-semibold text-base sm:text-lg">Avanthi Institute of Engineering and Technology</h3>
+                  <time className={`block mt-1 mb-2 text-xs sm:text-sm font-medium ${dark ? "text-indigo-400" : "text-indigo-600"}`}>B.Tech in Computer Science — Oct 2022 – Jul 2025</time>
+                  <p className={`text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>Focused on algorithms, data structures, and distributed systems projects.</p>
+                </div>
+              </motion.li>
 
-            <motion.li
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.08 }}
-              className="mb-10 ml-6"
-            >
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-              </span>
-              <h3 className="font-semibold text-lg">Teegala Krishna Reddy Engineering College</h3>
-              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">Diploma in Electronics & Communication Engineering — Jun 2019 – Jun 2022</time>
-              <p className="text-sm text-gray-700 dark:text-gray-300">Completed diploma coursework with practical labs in embedded systems and signals.</p>
-            </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mb-8 sm:mb-10 ml-6 sm:ml-8"
+              >
+                <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full ring-4 ring-indigo-500/20">
+                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                </span>
+                <div className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 hover:shadow-lg ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}>
+                  <h3 className="font-semibold text-base sm:text-lg">Teegala Krishna Reddy Engineering College</h3>
+                  <time className={`block mt-1 mb-2 text-xs sm:text-sm font-medium ${dark ? "text-indigo-400" : "text-indigo-600"}`}>Diploma in Electronics & Communication Engineering — Jun 2019 – Jun 2022</time>
+                  <p className={`text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>Completed diploma coursework with practical labs in embedded systems and signals.</p>
+                </div>
+              </motion.li>
 
-            <motion.li
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.16 }}
-              className="mb-10 ml-6"
-            >
-              <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full ring-8 ring-indigo-100 dark:ring-gray-900">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-              </span>
-              <h3 className="font-semibold text-lg">SR Digi School</h3>
-              <time className="block mb-2 text-xs text-gray-500 dark:text-gray-400">Secondary School Certificate — Jun 2013 – Jun 2019</time>
-              <p className="text-sm text-gray-700 dark:text-gray-300">Completed secondary education with emphasis on math and science.</p>
-            </motion.li>
-          </ol>
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mb-8 sm:mb-10 ml-6 sm:ml-8"
+              >
+                <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full ring-4 ring-indigo-500/20">
+                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                </span>
+                <div className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 hover:shadow-lg ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}>
+                  <h3 className="font-semibold text-base sm:text-lg">SR Digi School</h3>
+                  <time className={`block mt-1 mb-2 text-xs sm:text-sm font-medium ${dark ? "text-indigo-400" : "text-indigo-600"}`}>Secondary School Certificate — Jun 2013 – Jun 2019</time>
+                  <p className={`text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>Completed secondary education with emphasis on math and science.</p>
+                </div>
+              </motion.li>
+            </ol>
+          </div>
         </section>
 
         {/* Contact */}
         <section
           ref={sections.contact}
           data-section="contact"
-          className="max-w-6xl mx-auto px-4 py-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
         >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Contact
-          </h2>
-          <div className={`grid md:grid-cols-2 gap-10 rounded-lg ${
-            dark ? "bg-gray-900 p-10 border border-gray-800" : "bg-white p-10 border border-gray-200"
-          }`}>
-            <div className="space-y-6">
-              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                Feel free to reach out for collaboration, questions about implementation patterns, or code reviews.
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  Email:{" "}
-                  <a
-                    href="mailto:yadlasunny143@gmail.com"
-                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
-                  >
-                    yadlasunny143@gmail.com
-                  </a>
-                </li>
-                <li>
-                  LinkedIn:{" "}
-                  <a
-                    href="https://linkedin.com/in/yadla-sunny"
-                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    linkedin.com/in/yadla-sunny
-                  </a>
-                </li>
-                <li>
-                  GitHub:{" "}
-                  <a
-                    href="https://github.com/Yadlasunny"
-                    className={`no-underline ${dark ? "text-gray-300" : "text-gray-700"}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    github.com/Yadlasunny
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <form
-              onSubmit={sendEmail}
-              className="space-y-4"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center md:text-left mb-10 md:mb-14"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              Get In Touch
+            </h2>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+              Feel free to reach out for collaboration, questions about implementation patterns, or code reviews.
+            </p>
+          </motion.div>
+          <div className={`grid md:grid-cols-2 gap-8 md:gap-12 rounded-2xl p-6 sm:p-8 md:p-10 ${
+            dark ? "bg-gray-900/50 border border-gray-800/50" : "bg-white border border-gray-200"
+          } shadow-lg`}>
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-6"
             >
-              <div className="flex flex-col gap-1">
-                <label htmlFor="from_name" className="text-xs font-semibold uppercase tracking-wide">Name</label>
+              <div className={`p-4 sm:p-5 rounded-xl ${dark ? "bg-gray-800/50" : "bg-gray-50"}`}>
+                <h3 className="font-semibold mb-4 text-base sm:text-lg">Contact Information</h3>
+                <ul className="space-y-4 text-sm sm:text-base">
+                  <li className="flex items-center gap-3">
+                    <span className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${dark ? "bg-indigo-500/10" : "bg-indigo-50"}`}>
+                      <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    </span>
+                    <a
+                      href="mailto:yadlasunny143@gmail.com"
+                      className={`hover:text-indigo-500 transition-colors ${dark ? "text-gray-300" : "text-gray-700"}`}
+                    >
+                      yadlasunny143@gmail.com
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${dark ? "bg-blue-500/10" : "bg-blue-50"}`}>
+                      <FaLinkedin className="w-5 h-5 text-blue-600" />
+                    </span>
+                    <a
+                      href="https://linkedin.com/in/yadla-sunny"
+                      className={`hover:text-indigo-500 transition-colors ${dark ? "text-gray-300" : "text-gray-700"}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      linkedin.com/in/yadla-sunny
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${dark ? "bg-gray-700" : "bg-gray-100"}`}>
+                      <FaGithub className={`w-5 h-5 ${dark ? "text-gray-300" : "text-gray-700"}`} />
+                    </span>
+                    <a
+                      href="https://github.com/Yadlasunny"
+                      className={`hover:text-indigo-500 transition-colors ${dark ? "text-gray-300" : "text-gray-700"}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      github.com/Yadlasunny
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+            <motion.form
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              onSubmit={sendEmail}
+              className="space-y-4 sm:space-y-5"
+            >
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="from_name" className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${dark ? "text-gray-400" : "text-gray-600"}`}>Name</label>
                 <input
                   id="from_name"
                   required
                   name="from_name"
-                  className={`px-3 py-2 rounded border text-sm ${
+                  className={`px-4 py-3 rounded-xl border text-sm sm:text-base transition-all duration-200 ${
                     dark
-                      ? "bg-gray-950 border-gray-700 focus:border-indigo-500"
-                      : "bg-white border-gray-300 focus:border-indigo-600"
-                  } outline-none transition`}
+                      ? "bg-gray-800 border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                      : "bg-gray-50 border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  } outline-none`}
+                  placeholder="Your name"
                 />
               </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="from_email" className="text-xs font-semibold uppercase tracking-wide">Email</label>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="from_email" className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${dark ? "text-gray-400" : "text-gray-600"}`}>Email</label>
                 <input
                   id="from_email"
                   required
                   type="email"
                   name="from_email"
-                  className={`px-3 py-2 rounded border text-sm ${
+                  className={`px-4 py-3 rounded-xl border text-sm sm:text-base transition-all duration-200 ${
                     dark
-                      ? "bg-gray-950 border-gray-700 focus:border-indigo-500"
-                      : "bg-white border-gray-300 focus:border-indigo-600"
-                  } outline-none transition`}
+                      ? "bg-gray-800 border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                      : "bg-gray-50 border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  } outline-none`}
+                  placeholder="your@email.com"
                 />
               </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-wide">Message</label>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="message" className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${dark ? "text-gray-400" : "text-gray-600"}`}>Message</label>
                 <textarea
                   id="message"
                   required
                   name="message"
                   rows={4}
-                  className={`px-3 py-2 rounded border text-sm resize-none ${
+                  className={`px-4 py-3 rounded-xl border text-sm sm:text-base resize-none transition-all duration-200 ${
                     dark
-                      ? "bg-gray-950 border-gray-700 focus:border-indigo-500"
-                      : "bg-white border-gray-300 focus:border-indigo-600"
-                  } outline-none transition`}
+                      ? "bg-gray-800 border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                      : "bg-gray-50 border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  } outline-none`}
+                  placeholder="Your message..."
                 />
               </div>
               {formStatus && (
-                <div className={`text-sm ${formStatus.type === "success" ? "text-green-600" : "text-red-600"}`}>
+                <div className={`p-3 rounded-lg text-sm ${formStatus.type === "success" ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"}`}>
                   {formStatus.text}
                 </div>
               )}
               <button
                 type="submit"
                 disabled={sending}
-                className={`w-full py-3 rounded-md ${sending ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-500"} text-white font-medium transition`}
+                className={`w-full py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 ${
+                  sending 
+                    ? "bg-gray-400 cursor-not-allowed" 
+                    : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5"
+                } text-white active:scale-95`}
               >
-                {sending ? "Sending..." : "Send"}
+                {sending ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg>
+                    Sending...
+                  </span>
+                ) : "Send Message"}
               </button>
-             </form>
+            </motion.form>
           </div>
         </section>
 
         {/* Testimonials */}
-        <section className="max-w-6xl mx-auto px-4 py-20">
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Testimonials
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-lg border bg-white dark:bg-gray-900 dark:border-gray-800 border-gray-200">
-              <p className="italic">"Yadla Sunny is a fantastic developer who delivers on time and with quality."</p>
-              <div className="mt-4 font-semibold">– Jane Doe, Manager at Example Corp</div>
-            </div>
-            <div className="p-6 rounded-lg border bg-white dark:bg-gray-900 dark:border-gray-800 border-gray-200">
-              <p className="italic">"Great attention to detail and always ready to help the team."</p>
-              <div className="mt-4 font-semibold">– Kavali Vishal, Co-Founder of NirvionX</div>
+        <section className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10 md:mb-14"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center justify-center gap-3">
+                <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+                Testimonials
+              </h2>
+              <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                What colleagues and collaborators say about working with me.
+              </p>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className={`p-6 sm:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
+              >
+                <div className="absolute -top-3 left-6 text-5xl text-indigo-500/20">“</div>
+                <p className={`italic text-base sm:text-lg leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Yadla Sunny is a fantastic developer who delivers on time and with quality."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">JD</div>
+                  <div>
+                    <div className="font-semibold text-sm sm:text-base">Jane Doe</div>
+                    <div className={`text-xs sm:text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>Manager at Example Corp</div>
+                  </div>
+                </div>
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className={`p-6 sm:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
+              >
+                <div className="absolute -top-3 left-6 text-5xl text-indigo-500/20">“</div>
+                <p className={`italic text-base sm:text-lg leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Great attention to detail and always ready to help the team."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold">KV</div>
+                  <div>
+                    <div className="font-semibold text-sm sm:text-base">Kavali Vishal</div>
+                    <div className={`text-xs sm:text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>Co-Founder of NirvionX</div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -828,105 +1064,183 @@ export default function Portfolio() {
         <section
           ref={sections.blog}
           data-section="blog"
-          className="max-w-6xl mx-auto px-4 py-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
         >
-          <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span className="h-8 w-1.5 rounded bg-indigo-600" /> Blog
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-lg border bg-white dark:bg-gray-900 dark:border-gray-800 border-gray-200">
-              <h3 className="font-semibold text-lg mb-2">How to Structure a React Project</h3>
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">Tips for scalable folder structure and code organization.</p>
-              <a href="#" className="text-indigo-600 hover:underline text-sm">Read more</a>
-            </div>
-            <div className="p-6 rounded-lg border bg-white dark:bg-gray-900 dark:border-gray-800 border-gray-200">
-              <h3 className="font-semibold text-lg mb-2">Optimizing React Performance</h3>
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">Memoization, lazy loading, and best practices.</p>
-              <a href="#" className="text-indigo-600 hover:underline text-sm">Read more</a>
-            </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center md:text-left mb-10 md:mb-14"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              Latest Articles
+            </h2>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+              Thoughts and tutorials on web development.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <motion.article 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 ${dark ? "bg-indigo-500/10 text-indigo-400" : "bg-indigo-50 text-indigo-600"}`}>React</div>
+              <h3 className="font-semibold text-lg sm:text-xl mb-3 group-hover:text-indigo-500 transition-colors">How to Structure a React Project</h3>
+              <p className={`text-sm sm:text-base mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Tips for scalable folder structure and code organization.</p>
+              <a href="#" className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}>
+                Read more
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
+            </motion.article>
+            <motion.article 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 ${dark ? "bg-purple-500/10 text-purple-400" : "bg-purple-50 text-purple-600"}`}>Performance</div>
+              <h3 className="font-semibold text-lg sm:text-xl mb-3 group-hover:text-indigo-500 transition-colors">Optimizing React Performance</h3>
+              <p className={`text-sm sm:text-base mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Memoization, lazy loading, and best practices.</p>
+              <a href="#" className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}>
+                Read more
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
+            </motion.article>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="py-10 text-center text-xs opacity-70">
-        © {new Date().getFullYear()} Yadla Sunny. Built with React + Tailwind.
+      <footer className={`py-8 sm:py-12 pb-24 sm:pb-12 border-t ${dark ? "border-gray-800/50 bg-gray-950/50" : "border-gray-200 bg-gray-50"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="font-bold text-lg bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
+            <p className={`text-xs sm:text-sm text-center ${dark ? "text-gray-500" : "text-gray-500"}`}>
+              © {new Date().getFullYear()} Yadla Sunny. Built with React + Tailwind.
+            </p>
+            <div className="flex items-center gap-3">
+              <a href="https://github.com/Yadlasunny" target="_blank" rel="noreferrer" className={`p-2.5 rounded-lg transition-all duration-200 ${dark ? "bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700" : "bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200"}`}>
+                <FaGithub size={18} />
+              </a>
+              <a href="https://linkedin.com/in/yadla-sunny" target="_blank" rel="noreferrer" className={`p-2.5 rounded-lg transition-all duration-200 ${dark ? "bg-gray-800 text-gray-400 hover:text-blue-400 hover:bg-gray-700" : "bg-gray-100 text-gray-600 hover:text-blue-600 hover:bg-gray-200"}`}>
+                <FaLinkedin size={18} />
+              </a>
+              <a href="https://twitter.com/your-handle" target="_blank" rel="noreferrer" className={`p-2.5 rounded-lg transition-all duration-200 ${dark ? "bg-gray-800 text-gray-400 hover:text-sky-400 hover:bg-gray-700" : "bg-gray-100 text-gray-600 hover:text-sky-500 hover:bg-gray-200"}`}>
+                <FaTwitter size={18} />
+              </a>
+            </div>
+          </div>
+        </div>
       </footer>
 
       {/* Project Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal}>
-          <div
-            className={`max-w-lg w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative`}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={closeModal}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2 }}
+            className={`max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-6 sm:p-8 relative ${dark ? "bg-gray-900 border border-gray-800" : "bg-white"}`}
             onClick={e => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
-              className="absolute top-3 right-3 text-2xl font-bold text-gray-400 hover:text-indigo-600"
+              className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${dark ? "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900"}`}
               aria-label="Close"
             >
-              &times;
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
             <img
               src={selectedProject.image}
               alt={selectedProject.title}
-              className="w-full h-48 object-cover rounded mb-4"
+              className="w-full h-48 sm:h-56 object-cover rounded-xl mb-5"
               onError={e => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = placeholder;
               }}
             />
-            <h3 className="text-2xl font-bold mb-2">{selectedProject.title}</h3>
-            <button
-              onClick={() => toggleFavorite(selectedProject.id)}
-              aria-label={favorites.includes(selectedProject.id) ? "Unfavorite project" : "Favorite project"}
-              className={`ml-3 inline-flex items-center gap-2 text-sm px-2 py-1 rounded ${
-                favorites.includes(selectedProject.id) ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-700"
-              }`}
-            >
-              {favorites.includes(selectedProject.id) ? <FaHeart /> : <FaRegHeart />} Favorite
-            </button>
-            <p className="mb-4">{selectedProject.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold">{selectedProject.title}</h3>
+              <button
+                onClick={() => toggleFavorite(selectedProject.id)}
+                aria-label={favorites.includes(selectedProject.id) ? "Unfavorite project" : "Favorite project"}
+                className={`flex-shrink-0 p-2 rounded-lg transition-all duration-200 ${
+                  favorites.includes(selectedProject.id) ? "bg-red-500/10 text-red-500" : dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"
+                } hover:scale-105`}
+              >
+                {favorites.includes(selectedProject.id) ? <FaHeart size={16} /> : <FaRegHeart size={16} />}
+              </button>
+            </div>
+            <div className={`mb-5 text-sm sm:text-base ${dark ? "text-gray-300" : "text-gray-600"}`}>{selectedProject.description}</div>
+            <div className="flex flex-wrap gap-2 mb-6">
               {selectedProject.tech.map(t => (
-                <span key={t} className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">{t}</span>
+                <span key={t} className={`text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg ${dark ? "bg-indigo-500/10 text-indigo-400" : "bg-indigo-50 text-indigo-600"}`}>{t}</span>
               ))}
             </div>
-            <div className="flex gap-4">
-              <a href={selectedProject.live} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline">Live</a>
-              <a href={selectedProject.repo} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline">Code</a>
+            <div className="flex gap-3">
+              <a 
+                href={selectedProject.live} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="flex-1 py-3 rounded-xl font-semibold text-center text-sm sm:text-base bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-200"
+              >
+                View Live
+              </a>
+              <a 
+                href={selectedProject.repo} 
+                target="_blank" 
+                rel="noreferrer" 
+                className={`flex-1 py-3 rounded-xl font-semibold text-center text-sm sm:text-base transition-all duration-200 ${dark ? "bg-gray-800 text-gray-100 hover:bg-gray-700" : "bg-gray-100 text-gray-900 hover:bg-gray-200"}`}
+              >
+                View Code
+              </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
 
       {/* Scroll to Top Button */}
-      <ScrollToTopButton />
+      <ScrollToTopButton dark={dark} />
 
-      {/* Social Links */}
-      <div className="fixed top-1/2 left-0 z-40 flex flex-col gap-2 -translate-y-1/2">
-        <a href="https://github.com/Yadlasunny" target="_blank" rel="noreferrer" className="p-2 bg-gray-800 text-white rounded-r hover:bg-indigo-600">
-          <FaGithub size={20} />
+      {/* Mobile sticky CTA bar - visible only on mobile when scrolled past hero */}
+      <MobileCTABar dark={dark} />
+
+      {/* Social Links - hidden on mobile, shown on larger screens */}
+      <div className="hidden md:flex fixed top-1/2 left-0 z-40 flex-col gap-1 -translate-y-1/2">
+        <a href="https://github.com/Yadlasunny" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-indigo-600 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-indigo-600 hover:text-white"}`}>
+          <FaGithub size={18} />
         </a>
-        <a href="https://linkedin.com/in/yadla-sunny" target="_blank" rel="noreferrer" className="p-2 bg-blue-700 text-white rounded-r hover:bg-indigo-600">
-          <FaLinkedin size={20} />
+        <a href="https://linkedin.com/in/yadla-sunny" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-blue-600 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white"}`}>
+          <FaLinkedin size={18} />
         </a>
-        <a href="https://twitter.com/your-handle" target="_blank" rel="noreferrer" className="p-2 bg-blue-400 text-white rounded-r hover:bg-indigo-600">
-          <FaTwitter size={20} />
+        <a href="https://twitter.com/your-handle" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-sky-500 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-sky-500 hover:text-white"}`}>
+          <FaTwitter size={18} />
         </a>
       </div>
 
       {/* toast */}
       {toast && (
-        <div className="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2 rounded shadow-lg">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          className={`fixed bottom-6 right-6 px-5 py-3 rounded-xl shadow-lg z-50 ${dark ? "bg-gray-800 text-gray-100" : "bg-gray-900 text-white"}`}
+        >
           {toast}
-        </div>
+        </motion.div>
       )}
     </div>
   );
 }
 
-function ScrollToTopButton() {
+function ScrollToTopButton({ dark }) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 300);
@@ -937,11 +1251,66 @@ function ScrollToTopButton() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 transition"
+      className={`fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 p-3 sm:p-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
+        dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-600 text-white hover:bg-indigo-500"
+      }`}
       aria-label="Scroll to top"
     >
-      ↑
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
     </button>
+  );
+}
+
+// Mobile sticky CTA bar for recruiters - easy access to resume and contact
+function MobileCTABar({ dark }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 500);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  
+  if (!visible) return null;
+  
+  return (
+    <motion.div 
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      exit={{ y: 100 }}
+      className={`md:hidden fixed bottom-0 left-0 right-0 z-50 px-4 py-3 border-t backdrop-blur-xl ${
+        dark ? "bg-gray-950/95 border-gray-800" : "bg-white/95 border-gray-200"
+      }`}
+    >
+      <div className="flex gap-3 max-w-lg mx-auto">
+        <a
+          href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white active:scale-95 transition-transform"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          Resume
+        </a>
+        <a
+          href="mailto:yadlasunny143@gmail.com"
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm border active:scale-95 transition-transform ${
+            dark ? "bg-gray-800 border-gray-700 text-white" : "bg-gray-100 border-gray-200 text-gray-900"
+          }`}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          Email
+        </a>
+        <a
+          href="https://linkedin.com/in/yadla-sunny"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-center p-3 rounded-xl bg-[#0077B5] text-white active:scale-95 transition-transform"
+          aria-label="LinkedIn"
+        >
+          <FaLinkedin size={18} />
+        </a>
+      </div>
+    </motion.div>
   );
 }
 
