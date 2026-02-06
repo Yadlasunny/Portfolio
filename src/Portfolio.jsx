@@ -407,9 +407,8 @@ export default function Portfolio() {
                   ))}
                   <div className={`border-t ${dark ? "border-gray-800" : "border-gray-200"}`}>
                     <a
-                      href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="https://drive.google.com/uc?export=download&id=1LRSC8bB0Z6LEYchNRuCFw6Fb6lZnWLut"
+                      download
                       className={`flex items-center gap-2 w-full px-4 py-3 text-sm font-semibold transition-all duration-200 ${dark ? "text-indigo-400 hover:bg-gray-800" : "text-indigo-600 hover:bg-gray-50"}`}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -492,9 +491,8 @@ export default function Portfolio() {
                 </button>
 
                 <a
-                  href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="https://drive.google.com/uc?export=download&id=1LRSC8bB0Z6LEYchNRuCFw6Fb6lZnWLut"
+                  download
                   className={`group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 min-h-[48px] sm:min-h-[56px] rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5
                     ${dark 
                       ? "bg-gradient-to-r from-gray-800 to-gray-800 text-white border-2 border-indigo-500/50 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/15" 
@@ -506,7 +504,7 @@ export default function Portfolio() {
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  Download Resume
+                  Resume
                 </a>
               </motion.div>
 
@@ -1459,9 +1457,8 @@ function MobileCTABar({ dark }) {
     >
       <div className="flex gap-3 max-w-lg mx-auto">
         <a
-          href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="https://drive.google.com/uc?export=download&id=1LRSC8bB0Z6LEYchNRuCFw6Fb6lZnWLut"
+          download
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white active:scale-95 transition-transform"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
