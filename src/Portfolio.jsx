@@ -673,71 +673,16 @@ export default function Portfolio() {
             transition={{ duration: 0.5 }}
             className="text-center mb-10 md:mb-14"
           >
-            <div className="flex items-center justify-center gap-3">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                Featured Projects
-              </h2>
-              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${dark ? "bg-indigo-500/20 text-indigo-400" : "bg-indigo-100 text-indigo-600"}`}>
-                {projects.length}
-              </span>
-            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+              Featured Projects
+            </h2>
             <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
               A selection of my recent work and personal projects.
             </p>
           </motion.div>
 
-          {/* Filter & Search Bar */}
-          <div className="flex flex-col gap-4 mb-8">
-            {/* Search + Sort Row */}
-            <div className="flex gap-3">
-              <div className="relative flex-1">
-                <svg className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${dark ? "text-gray-500" : "text-gray-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search projects..."
-                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500 focus:bg-gray-900" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
-                  aria-label="Search projects"
-                />
-              </div>
-              <select
-                id="sortProjects"
-                value={sortBy}
-                onChange={e => setSortBy(e.target.value)}
-                className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-300 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-700 focus:border-indigo-500"} focus:outline-none`}
-                aria-label="Sort projects"
-              >
-                <option value="date">Latest</option>
-                <option value="tech">Tech</option>
-                <option value="favorites">Favorites</option>
-              </select>
-            </div>
-
-            {/* Tech Filters - Scrollable on mobile */}
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible scrollbar-hide">
-              {allTechs.map(tech => (
-                <button
-                  key={tech}
-                  onClick={() => setProjectFilter(tech)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                    projectFilter === tech
-                      ? "bg-indigo-600 text-white shadow-sm"
-                      : dark
-                      ? "bg-gray-800/80 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
-                      : "bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200"
-                  }`}
-                  aria-pressed={projectFilter === tech}
-                >
-                  {tech}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Project Cards */}
-          <div className="space-y-6">
+          {/* Project Cards - Grid Layout */}
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((p, index) => (
               <motion.article
                 key={p.id}
@@ -745,108 +690,51 @@ export default function Portfolio() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`group rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-lg relative ${
-                  dark ? "border-gray-800 bg-gray-900/50 hover:border-gray-700" : "border-gray-200 bg-white hover:border-gray-300"
+                className={`group rounded-xl border p-5 sm:p-6 flex flex-col transition-all duration-300 hover:border-gray-600 ${
+                  dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"
                 }`}
               >
-                {/* Category accent border */}
-                <div className={`absolute left-0 top-0 bottom-0 w-1 ${
-                  p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t))
-                    ? "bg-gradient-to-b from-purple-500 to-pink-500"
-                    : p.tech.some(t => ["React", "TypeScript", "Flask", "HTML", "CSS", "JavaScript"].includes(t))
-                    ? "bg-gradient-to-b from-indigo-500 to-blue-500"
-                    : "bg-gradient-to-b from-emerald-500 to-teal-500"
-                }`} />
+                {/* Header: Title + GitHub Icon */}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <h3 className="font-bold text-lg sm:text-xl leading-tight">{p.title}</h3>
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`p-2 rounded-lg transition-all duration-200 flex-shrink-0 ${
+                      dark 
+                        ? "text-gray-500 hover:text-gray-300 hover:bg-gray-800" 
+                        : "text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                    }`}
+                    aria-label={`View ${p.title} on GitHub`}
+                  >
+                    <FaGithub size={20} />
+                  </a>
+                </div>
 
-                  {/* Project Content */}
-                  <div className="flex-1 p-5 sm:p-6 lg:p-8 flex flex-col">
-                    {/* Header: Title + Date + Category */}
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                      <div>
-                        <h3 className="font-bold text-lg sm:text-xl lg:text-2xl leading-tight">{p.title}</h3>
-                        <span className={`inline-block mt-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded ${
-                          p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t))
-                            ? dark ? "bg-purple-500/20 text-purple-400" : "bg-purple-100 text-purple-600"
-                            : p.tech.some(t => ["React", "TypeScript"].includes(t))
-                            ? dark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-600"
-                            : dark ? "bg-emerald-500/20 text-emerald-400" : "bg-emerald-100 text-emerald-600"
-                        }`}>
-                          {p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t)) ? "AI/ML" : p.tech.some(t => ["React", "TypeScript"].includes(t)) ? "Web App" : "Data"}
-                        </span>
-                      </div>
-                      <time className={`text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap self-start ${dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"}`}>
-                        {new Date(p.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                      </time>
-                    </div>
+                {/* Description - Simple paragraph */}
+                <p className={`text-sm leading-relaxed mb-6 flex-1 ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                  {p.id === 1 && "Machine learning-based system for forecasting electricity demand using historical weather data. The model analyzes temperature, humidity, and seasonal trends to improve power load prediction accuracy."}
+                  {p.id === 2 && "A real-time facial expression detection system built with CNN and YOLO, achieving 91.3% accuracy. Focused on key expressions for reliable emotion recognition in real-world applications."}
+                  {p.id === 3 && "A Python/Flask full-stack web application providing high-quality abstractive summarization using Hugging Face Transformers and the distilbart-cnn-12-6 model."}
+                  {p.id === 4 && "Responsive single-page application built with React and TypeScript to showcase proficiency in modern frontend development and state management."}
+                </p>
 
-                    {/* Problem Statement / Purpose */}
-                    <p className={`text-sm font-medium mb-3 ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
-                      {p.id === 1 && "Data-driven yield prediction for agricultural decision-making"}
-                      {p.id === 2 && "Real-time emotion detection using deep learning"}
-                      {p.id === 3 && "AI-powered text summarization web application"}
-                      {p.id === 4 && "Modern task management with React & TypeScript"}
-                    </p>
-
-                    {/* Key Features */}
-                    <div className={`mb-4 text-sm leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}>
-                      {p.id === 1 && (
-                        <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Built a yield prediction system using <strong className={dark ? "text-gray-200" : "text-gray-800"}>Python, Spark, and Hadoop</strong> for large-scale agricultural datasets.</span></li>
-                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Enabled data-driven decision-making for farmers and stakeholders.</span></li>
-                        </ul>
-                      )}
-                      {p.id === 2 && (
-                        <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Developed a real-time facial expression detection system with CNN and YOLO, achieving <strong className={dark ? "text-green-400" : "text-green-600"}>91.3% accuracy</strong>.</span></li>
-                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Focused on key expressions (happiness, sadness, anger) for reliable real-world applications.</span></li>
-                        </ul>
-                      )}
-                      {p.id === 3 && (
-                        <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Designed and implemented a <strong className={dark ? "text-gray-200" : "text-gray-800"}>Python/Flask full-stack web application</strong> providing high-quality abstractive summarization.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Integrated <strong className={dark ? "text-gray-200" : "text-gray-800"}>Hugging Face Transformers</strong> with distilbart-cnn-12-6 model for state-of-the-art results.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Demonstrated API workflow management with PyTorch/GPU backend processing.</span></li>
-                        </ul>
-                      )}
-                      {p.id === 4 && (
-                        <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-blue-500 mt-1">•</span><span>Responsive single-page application showcasing <strong className={dark ? "text-gray-200" : "text-gray-800"}>React & TypeScript</strong> with modern state management.</span></li>
-                          <li className="flex gap-2"><span className="text-blue-500 mt-1">•</span><span>Implemented core CRUD functionality with component-based architecture and user-friendly design.</span></li>
-                        </ul>
-                      )}
-                    </div>
-
-                    {/* Tech Stack */}
-                    <div className="mb-5">
-                      <span className={`text-xs font-semibold uppercase tracking-wider ${dark ? "text-gray-500" : "text-gray-400"}`}>Tech Stack</span>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {p.tech.map(t => (
-                          <span
-                            key={t}
-                            className={`text-xs font-medium px-2.5 py-1 rounded-md transition-colors ${
-                              dark ? "bg-gray-800 text-gray-300 hover:bg-gray-750" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            }`}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-3 mt-auto pt-2">
-                      <a
-                        href={p.repo}
-                        className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] min-h-[48px] sm:min-h-0"
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FaGithub size={18} className="sm:w-4 sm:h-4" />
-                        View Code
-                      </a>
-                    </div>
-                  </div>
+                {/* Tech Tags - Outlined style */}
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {p.tech.slice(0, 3).map(t => (
+                    <span
+                      key={t}
+                      className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                        dark 
+                          ? "border-blue-500/40 text-blue-400 hover:border-blue-400" 
+                          : "border-blue-300 text-blue-600 hover:border-blue-500"
+                      }`}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </motion.article>
             ))}
           </div>
