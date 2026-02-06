@@ -673,9 +673,14 @@ export default function Portfolio() {
             transition={{ duration: 0.5 }}
             className="text-center mb-10 md:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-              Featured Projects
-            </h2>
+            <div className="flex items-center justify-center gap-3">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                Featured Projects
+              </h2>
+              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${dark ? "bg-indigo-500/20 text-indigo-400" : "bg-indigo-100 text-indigo-600"}`}>
+                {projects.length}
+              </span>
+            </div>
             <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
               A selection of my recent work and personal projects.
             </p>
@@ -683,54 +688,51 @@ export default function Portfolio() {
 
           {/* Filter & Search Bar */}
           <div className="flex flex-col gap-4 mb-8">
-            {/* Search */}
-            <div className="relative">
-              <svg className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${dark ? "text-gray-500" : "text-gray-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search projects..."
-                className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500 focus:bg-gray-900" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
-                aria-label="Search projects"
-              />
+            {/* Search + Sort Row */}
+            <div className="flex gap-3">
+              <div className="relative flex-1">
+                <svg className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${dark ? "text-gray-500" : "text-gray-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search projects..."
+                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500 focus:bg-gray-900" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
+                  aria-label="Search projects"
+                />
+              </div>
+              <select
+                id="sortProjects"
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
+                className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-300 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-700 focus:border-indigo-500"} focus:outline-none`}
+                aria-label="Sort projects"
+              >
+                <option value="date">Latest</option>
+                <option value="tech">Tech</option>
+                <option value="favorites">Favorites</option>
+              </select>
             </div>
 
-            {/* Tech Filters + Sort */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-              <div className="flex flex-wrap gap-2">
-                {allTechs.map(tech => (
-                  <button
-                    key={tech}
-                    onClick={() => setProjectFilter(tech)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
-                      projectFilter === tech
-                        ? "bg-indigo-600 text-white shadow-sm"
-                        : dark
-                        ? "bg-gray-800/80 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
-                        : "bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200"
-                    }`}
-                    aria-pressed={projectFilter === tech}
-                  >
-                    {tech}
-                  </button>
-                ))}
-              </div>
-              <div className="flex items-center gap-2 self-end sm:self-auto">
-                <span className={`text-xs ${dark ? "text-gray-500" : "text-gray-400"}`}>Sort:</span>
-                <select
-                  id="sortProjects"
-                  value={sortBy}
-                  onChange={e => setSortBy(e.target.value)}
-                  className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${dark ? "bg-gray-900 border-gray-800 text-gray-300 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-700 focus:border-indigo-500"} focus:outline-none`}
-                  aria-label="Sort projects"
+            {/* Tech Filters - Scrollable on mobile */}
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible scrollbar-hide">
+              {allTechs.map(tech => (
+                <button
+                  key={tech}
+                  onClick={() => setProjectFilter(tech)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                    projectFilter === tech
+                      ? "bg-indigo-600 text-white shadow-sm"
+                      : dark
+                      ? "bg-gray-800/80 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
+                      : "bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200"
+                  }`}
+                  aria-pressed={projectFilter === tech}
                 >
-                  <option value="date">Latest</option>
-                  <option value="tech">Tech</option>
-                  <option value="favorites">Favorites</option>
-                </select>
-              </div>
+                  {tech}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -743,10 +745,18 @@ export default function Portfolio() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`group rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-lg ${
+                className={`group rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-lg relative ${
                   dark ? "border-gray-800 bg-gray-900/50 hover:border-gray-700" : "border-gray-200 bg-white hover:border-gray-300"
                 }`}
               >
+                {/* Category accent border */}
+                <div className={`absolute left-0 top-0 bottom-0 w-1 ${
+                  p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t))
+                    ? "bg-gradient-to-b from-purple-500 to-pink-500"
+                    : p.tech.some(t => ["React", "TypeScript", "Flask", "HTML", "CSS", "JavaScript"].includes(t))
+                    ? "bg-gradient-to-b from-indigo-500 to-blue-500"
+                    : "bg-gradient-to-b from-emerald-500 to-teal-500"
+                }`} />
                 <div className="flex flex-col lg:flex-row">
                   {/* Project Image */}
                   <div className="relative lg:w-80 xl:w-96 flex-shrink-0">
@@ -760,23 +770,34 @@ export default function Portfolio() {
                       />
                       <div className={`absolute inset-0 ${dark ? "bg-gradient-to-r lg:bg-gradient-to-l from-gray-900/0 via-gray-900/0 to-gray-900/80" : "bg-gradient-to-r lg:bg-gradient-to-l from-white/0 via-white/0 to-white/80"} hidden lg:block`} />
                     </div>
-                    {/* Favorite button */}
+                    {/* Favorite button - reduced prominence */}
                     <button
                       onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
                       aria-label={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
-                      className={`absolute top-3 right-3 z-10 p-2.5 rounded-full transition-all duration-200 backdrop-blur-sm
-                        ${favorites.includes(p.id) ? "bg-red-500 text-white shadow-lg" : dark ? "bg-gray-900/80 text-gray-400 hover:text-white" : "bg-white/90 text-gray-500 hover:text-red-500"}
+                      className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-200 opacity-60 hover:opacity-100
+                        ${favorites.includes(p.id) ? "bg-red-500/90 text-white" : dark ? "bg-gray-900/60 text-gray-400 hover:text-white" : "bg-white/70 text-gray-400 hover:text-red-500"}
                         hover:scale-110 active:scale-95`}
                     >
-                      {favorites.includes(p.id) ? <FaHeart size={14} /> : <FaRegHeart size={14} />}
+                      {favorites.includes(p.id) ? <FaHeart size={12} /> : <FaRegHeart size={12} />}
                     </button>
                   </div>
 
                   {/* Project Content */}
                   <div className="flex-1 p-5 sm:p-6 lg:p-8 flex flex-col">
-                    {/* Header: Title + Date */}
+                    {/* Header: Title + Date + Category */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                      <h3 className="font-bold text-lg sm:text-xl lg:text-2xl leading-tight pr-2">{p.title}</h3>
+                      <div>
+                        <h3 className="font-bold text-lg sm:text-xl lg:text-2xl leading-tight">{p.title}</h3>
+                        <span className={`inline-block mt-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded ${
+                          p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t))
+                            ? dark ? "bg-purple-500/20 text-purple-400" : "bg-purple-100 text-purple-600"
+                            : p.tech.some(t => ["React", "TypeScript"].includes(t))
+                            ? dark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-600"
+                            : dark ? "bg-emerald-500/20 text-emerald-400" : "bg-emerald-100 text-emerald-600"
+                        }`}>
+                          {p.tech.some(t => ["CNN", "YOLO", "TensorFlow", "PyTorch", "Scikit-learn", "Hugging Face Transformers"].includes(t)) ? "AI/ML" : p.tech.some(t => ["React", "TypeScript"].includes(t)) ? "Web App" : "Data"}
+                        </span>
+                      </div>
                       <time className={`text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap self-start ${dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"}`}>
                         {new Date(p.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                       </time>
@@ -794,27 +815,27 @@ export default function Portfolio() {
                     <div className={`mb-4 text-sm leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       {p.id === 1 && (
                         <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Built a yield prediction system using Python, Spark, and Hadoop for large-scale agricultural datasets.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Enabled data-driven decision-making for farmers and stakeholders.</span></li>
+                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Built a yield prediction system using <strong className={dark ? "text-gray-200" : "text-gray-800"}>Python, Spark, and Hadoop</strong> for large-scale agricultural datasets.</span></li>
+                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Enabled data-driven decision-making for farmers and stakeholders.</span></li>
                         </ul>
                       )}
                       {p.id === 2 && (
                         <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Developed a real-time facial expression detection system with CNN and YOLO, achieving 91.3% accuracy.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Focused on key expressions (happiness, sadness, anger) for reliable real-world applications.</span></li>
+                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Developed a real-time facial expression detection system with CNN and YOLO, achieving <strong className={dark ? "text-green-400" : "text-green-600"}>91.3% accuracy</strong>.</span></li>
+                          <li className="flex gap-2"><span className="text-purple-500 mt-1">•</span><span>Focused on key expressions (happiness, sadness, anger) for reliable real-world applications.</span></li>
                         </ul>
                       )}
                       {p.id === 3 && (
                         <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Designed and implemented a Python/Flask full-stack web application providing high-quality abstractive summarization.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Integrated Hugging Face Transformers with distilbart-cnn-12-6 model for state-of-the-art results.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Designed and implemented a <strong className={dark ? "text-gray-200" : "text-gray-800"}>Python/Flask full-stack web application</strong> providing high-quality abstractive summarization.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Integrated <strong className={dark ? "text-gray-200" : "text-gray-800"}>Hugging Face Transformers</strong> with distilbart-cnn-12-6 model for state-of-the-art results.</span></li>
                           <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Demonstrated API workflow management with PyTorch/GPU backend processing.</span></li>
                         </ul>
                       )}
                       {p.id === 4 && (
                         <ul className="space-y-1.5">
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Responsive single-page application showcasing modern frontend development and state management.</span></li>
-                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Implemented core CRUD functionality with component-based architecture and user-friendly design.</span></li>
+                          <li className="flex gap-2"><span className="text-blue-500 mt-1">•</span><span>Responsive single-page application showcasing <strong className={dark ? "text-gray-200" : "text-gray-800"}>React & TypeScript</strong> with modern state management.</span></li>
+                          <li className="flex gap-2"><span className="text-blue-500 mt-1">•</span><span>Implemented core CRUD functionality with component-based architecture and user-friendly design.</span></li>
                         </ul>
                       )}
                     </div>
@@ -840,20 +861,20 @@ export default function Portfolio() {
                     <div className="flex flex-wrap gap-3 mt-auto pt-2">
                       <a
                         href={p.repo}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98]"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] flex-1 sm:flex-none min-h-[48px] sm:min-h-0"
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <FaGithub size={16} />
+                        <FaGithub size={18} className="sm:w-4 sm:h-4" />
                         View Code
                       </a>
                       <button
                         onClick={() => setSelectedProject(p)}
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        className={`inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-lg text-sm font-medium transition-all duration-200 min-h-[48px] sm:min-h-0 ${
                           dark 
-                            ? "text-gray-400 hover:text-gray-200 hover:bg-gray-800" 
-                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                            ? "text-gray-400 hover:text-gray-200 hover:bg-gray-800 border border-gray-700" 
+                            : "text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-200"
                         } active:scale-[0.98]`}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
