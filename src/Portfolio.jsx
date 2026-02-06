@@ -622,39 +622,157 @@ export default function Portfolio() {
               transition={{ duration: 0.5 }}
               className="text-center mb-10 md:mb-14"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center justify-center gap-3">
-                <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 Skills & Technologies
               </h2>
               <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
                 Technologies and tools I work with to build modern web applications.
               </p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {skills.map((s, index) => (
-                <motion.div
-                  key={s.group}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`group rounded-2xl border p-5 sm:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "border-gray-800/50 bg-gray-900/80 hover:border-indigo-500/30" : "border-gray-200 bg-white hover:border-indigo-500/30"}`}
-                >
-                  <h3 className={`font-semibold text-base sm:text-lg mb-4 pb-3 border-b ${dark ? "border-gray-800 text-indigo-400" : "border-gray-100 text-indigo-600"}`}>{s.group}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {s.items.map(item => (
-                      <span
-                        key={item}
-                        className={`text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${
-                          dark ? "bg-gray-800 text-gray-300 hover:bg-indigo-500/20 hover:text-indigo-300" : "bg-gray-100 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
-                        }`}
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+              {/* Frontend Development */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">Frontend Development</h3>
+                <ul className="space-y-2.5">
+                  {["HTML / CSS", "JavaScript", "React.js / Next.js", "TypeScript", "Tailwind CSS"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Programming Languages */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">Programming Languages</h3>
+                <ul className="space-y-2.5">
+                  {["C / C++", "Java", "Python", "MATLAB", "JavaScript"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Cloud, Tools & Platforms */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm0 5h16" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">Cloud, Tools & Platforms</h3>
+                <ul className="space-y-2.5">
+                  {["AWS", "Git / GitHub", "Linux / Ubuntu", "Google Colab", "VS Code"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* AI & Machine Learning */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-purple-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">AI & Machine Learning</h3>
+                <ul className="space-y-2.5">
+                  {["PyTorch", "TensorFlow", "Computer Vision", "Natural Language Processing"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Backend Development */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-pink-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">Backend Development</h3>
+                <ul className="space-y-2.5">
+                  {["Node.js / Express.js", "Flask", "RESTful APIs", "jQuery"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Databases */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm0 5h16" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-lg mb-4">Databases</h3>
+                <ul className="space-y-2.5">
+                  {["MySQL", "MongoDB"].map(skill => (
+                    <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             </div>
           </div>
         </section>
