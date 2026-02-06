@@ -6,7 +6,11 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xs': '375px', // Extra small devices (iPhone SE, etc.)
+      },
+    },
   },
   plugins: [],
 };

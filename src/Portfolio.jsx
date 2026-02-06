@@ -84,7 +84,7 @@ export default function Portfolio() {
       ),
       tech: ["Python", "Spark", "Hadoop", "NumPy", "Pandas", "Scikit-learn"],
       live: "#",
-      repo: "#",
+      repo: "https://github.com/Yadlasunny/Yield-Prediction-using-ML",
       image: agroInformatics,
       date: "2025-01-01",
     },
@@ -123,7 +123,7 @@ export default function Portfolio() {
       ),
       tech: ["Python", "Flask", "Hugging Face Transformers", "PyTorch", "HTML", "CSS", "JavaScript"],
       live: "#",
-      repo: "#",
+      repo: "https://github.com/Yadlasunny/ai-text-summarizer/tree/main/src",
       image: aiTextSummarizer,
       date: "2025-05-01",
     },
@@ -142,9 +142,47 @@ export default function Portfolio() {
       ),
       tech: ["React", "TypeScript", "HTML", "CSS"],
       live: "#",
-      repo: "#",
+      repo: "https://github.com/Yadlasunny/To-do-List-App/tree/main/src",
       image: placeholder,
       date: "2025-07-15",
+    },
+    {
+      id: 5,
+      title: "Student Management System",
+      description: (
+        <>
+          <div className="mb-2 text-xs text-gray-500">Dec 2025</div>
+          <ul className="list-disc list-inside text-sm mb-2">
+            <li>Built a console-based Student Management System using Java and MySQL for managing academic records.</li>
+            <li>Implemented full CRUD operations (Create, Read, Update, Delete) with JDBC for database connectivity.</li>
+          </ul>
+          <div className="text-xs text-gray-400">Tools: Java, MySQL, JDBC, Maven</div>
+        </>
+      ),
+      tech: ["Java", "MySQL", "JDBC", "Maven"],
+      live: "#",
+      repo: "https://github.com/Yadlasunny/student-management-system",
+      image: placeholder,
+      date: "2025-12-01",
+    },
+    {
+      id: 6,
+      title: "CopyBin",
+      description: (
+        <>
+          <div className="mb-2 text-xs text-gray-500">Dec 2025</div>
+          <ul className="list-disc list-inside text-sm mb-2">
+            <li>Built a secure text-sharing application with shareable links, time-based expiration, and view limits.</li>
+            <li>Developed using Next.js with Prisma ORM for database management and deployed on Vercel.</li>
+          </ul>
+          <div className="text-xs text-gray-400">Tools: Next.js, JavaScript, Prisma, CSS</div>
+        </>
+      ),
+      tech: ["Next.js", "JavaScript", "Prisma", "CSS"],
+      live: "#",
+      repo: "https://github.com/Yadlasunny/CopyBin",
+      image: placeholder,
+      date: "2025-12-15",
     },
   ];
 
@@ -170,7 +208,7 @@ export default function Portfolio() {
     {
       group: "Databases",
       items: [
-        "PostgreSQL", "MongoDB"
+        "MySQL", "MongoDB"
       ]
     },
     {
@@ -306,7 +344,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className={`font-sans antialiased ${dark ? "bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-gray-100" : "bg-gradient-to-b from-slate-50 via-white to-slate-50 text-gray-900"} min-h-screen transition-colors duration-300`}>
+    <div className={`font-sans antialiased overflow-x-hidden ${dark ? "bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-gray-100" : "bg-gradient-to-b from-slate-50 via-white to-slate-50 text-gray-900"} min-h-screen transition-colors duration-300`}>
       {/* Accessibility: Skip to content */}
       <a
         href="#main-content"
@@ -320,8 +358,8 @@ export default function Portfolio() {
         className={`fixed top-0 inset-x-0 z-50 backdrop-blur-xl border-b transition-all duration-300 ${dark ? "border-gray-800/50 bg-gray-950/80" : "border-gray-200/50 bg-white/80"}`}
         aria-label="Main navigation"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-18">
-          <div className="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-16 md:h-18">
+          <div className="font-bold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setDark(d => !d)}
@@ -348,7 +386,7 @@ export default function Portfolio() {
                   initial={{ opacity: 0, scale: 0.95, y: -10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className={`absolute right-0 top-full mt-2 w-48 rounded-xl shadow-xl border overflow-hidden ${dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200"}`}
+                  className={`absolute right-0 top-full mt-2 w-44 sm:w-48 rounded-xl shadow-xl border overflow-hidden ${dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200"}`}
                 >
                   {["home", "about", "skills", "education", "projects", "contact"].map(item => (
                     <button
@@ -386,44 +424,29 @@ export default function Portfolio() {
       </header>
 
       {/* Main content */}
-      <main className="pt-16 md:pt-20" id="main-content" tabIndex={-1} aria-label="Main content">
+      <main className="pt-14 sm:pt-16 md:pt-20" id="main-content" tabIndex={-1} aria-label="Main content">
         {/* Hero / Home */}
         <section
           ref={sections.home}
           data-section="home"
-          className="relative min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] flex items-center overflow-hidden"
+          className="relative min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] flex items-center overflow-hidden"
           aria-label="Home section"
         >
           {/* Subtle background decoration */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className={`absolute top-1/4 -right-32 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 ${dark ? "bg-indigo-600" : "bg-indigo-400"}`} />
-            <div className={`absolute bottom-1/4 -left-32 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 ${dark ? "bg-purple-600" : "bg-purple-400"}`} />
+            <div className={`absolute top-1/4 -right-16 sm:-right-32 w-48 h-48 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-10 sm:opacity-15 ${dark ? "bg-indigo-600" : "bg-indigo-400"}`} />
+            <div className={`absolute bottom-1/4 -left-16 sm:-left-32 w-48 h-48 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-10 sm:opacity-15 ${dark ? "bg-purple-600" : "bg-purple-400"}`} />
           </div>
           
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative z-10 w-full">
+          <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-16 md:py-20 relative z-10 w-full">
             <div className="text-center space-y-6 sm:space-y-8">
-              {/* Greeting badge */}
+              {/* Name - Primary heading */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm ${dark ? "bg-gray-800/90 text-gray-200 border border-green-500/30 shadow-green-500/10" : "bg-white text-gray-700 border border-green-500/40 shadow-green-500/10"}`}>
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                  </span>
-                  Available for opportunities
-                </span>
-              </motion.div>
-
-              {/* Name - Primary heading */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                   <span className={dark ? "text-white" : "text-gray-900"}>Yadla Sunny</span>
                 </h1>
               </motion.div>
@@ -434,7 +457,7 @@ export default function Portfolio() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
               >
-                <h2 className={`text-xl sm:text-2xl md:text-3xl font-semibold ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
+                <h2 className={`text-lg sm:text-2xl md:text-3xl font-semibold ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
                   Full-Stack Developer  
                 </h2>
               </motion.div>
@@ -458,7 +481,7 @@ export default function Portfolio() {
               >
                 <button
                   onClick={() => scrollTo("projects")}
-                  className={`group px-8 py-4 min-h-[56px] rounded-xl font-semibold text-base transition-all duration-200
+                  className={`group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 min-h-[48px] sm:min-h-[56px] rounded-xl font-semibold text-sm sm:text-base transition-all duration-200
                     bg-indigo-600 text-white
                     hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-600/25 hover:-translate-y-0.5
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
@@ -472,7 +495,7 @@ export default function Portfolio() {
                   href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group px-8 py-4 min-h-[56px] rounded-xl font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2.5
+                  className={`group w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 min-h-[48px] sm:min-h-[56px] rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5
                     ${dark 
                       ? "bg-gradient-to-r from-gray-800 to-gray-800 text-white border-2 border-indigo-500/50 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/15" 
                       : "bg-white text-gray-900 border-2 border-indigo-500/40 hover:border-indigo-500 hover:shadow-xl hover:shadow-indigo-500/15"}
@@ -480,7 +503,7 @@ export default function Portfolio() {
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
                     active:scale-[0.98]`}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   Download Resume
@@ -551,7 +574,7 @@ export default function Portfolio() {
         <section
           ref={sections.about}
           data-section="about"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 space-y-10 md:space-y-14"
+          className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24 space-y-8 sm:space-y-10 md:space-y-14"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -568,15 +591,15 @@ export default function Portfolio() {
               Get to know my focus areas and the values I bring to every project.
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-xl ${dark ? "border-gray-800/50 bg-gray-900/50 hover:border-indigo-500/30" : "border-gray-200/50 bg-white hover:border-indigo-500/30"}`}
+              className={`group p-5 sm:p-6 md:p-8 rounded-2xl border transition-all duration-300 hover:shadow-xl ${dark ? "border-gray-800/50 bg-gray-900/50 hover:border-indigo-500/30" : "border-gray-200/50 bg-white hover:border-indigo-500/30"}`}
             >
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${dark ? "bg-indigo-500/10" : "bg-indigo-50"}`}>
+              <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-4 sm:mb-5 ${dark ? "bg-indigo-500/10" : "bg-indigo-50"}`}>
                 <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
               </div>
               <h3 className="font-semibold text-lg sm:text-xl mb-4">Focus Areas</h3>
@@ -612,9 +635,9 @@ export default function Portfolio() {
         <section
           ref={sections.skills}
           data-section="skills"
-          className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
+          className={`py-12 sm:py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -629,23 +652,23 @@ export default function Portfolio() {
                 Technologies and tools I work with to build modern web applications.
               </p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-              {/* Frontend Development */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+              {/* Frontend */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg mb-4">Frontend Development</h3>
+                <h3 className="font-bold text-lg mb-4">Frontend</h3>
                 <ul className="space-y-2.5">
-                  {["HTML / CSS", "JavaScript", "React.js / Next.js", "TypeScript", "Tailwind CSS"].map(skill => (
+                  {skills.find(s => s.group === "Frontend")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -654,22 +677,22 @@ export default function Portfolio() {
                 </ul>
               </motion.div>
 
-              {/* Programming Languages */}
+              {/* Languages */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-green-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg mb-4">Programming Languages</h3>
+                <h3 className="font-bold text-lg mb-4">Languages</h3>
                 <ul className="space-y-2.5">
-                  {["C / C++", "Java", "Python", "MATLAB", "JavaScript"].map(skill => (
+                  {skills.find(s => s.group === "Languages")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -678,22 +701,22 @@ export default function Portfolio() {
                 </ul>
               </motion.div>
 
-              {/* Cloud, Tools & Platforms */}
+              {/* Tools & Platforms */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-orange-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm0 5h16" />
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg mb-4">Cloud, Tools & Platforms</h3>
+                <h3 className="font-bold text-lg mb-4">Tools & Platforms</h3>
                 <ul className="space-y-2.5">
-                  {["AWS", "Git / GitHub", "Linux / Ubuntu", "Google Colab", "VS Code"].map(skill => (
+                  {skills.find(s => s.group === "Tools & Platforms")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -702,22 +725,22 @@ export default function Portfolio() {
                 </ul>
               </motion.div>
 
-              {/* AI & Machine Learning */}
+              {/* AI/ML & Data */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.3 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-purple-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg mb-4">AI & Machine Learning</h3>
+                <h3 className="font-bold text-lg mb-4">AI/ML & Data</h3>
                 <ul className="space-y-2.5">
-                  {["PyTorch", "TensorFlow", "Computer Vision", "Natural Language Processing"].map(skill => (
+                  {skills.find(s => s.group === "AI/ML & Data")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -726,22 +749,22 @@ export default function Portfolio() {
                 </ul>
               </motion.div>
 
-              {/* Backend Development */}
+              {/* Backend */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.4 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-pink-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-pink-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                   </svg>
                 </div>
-                <h3 className="font-bold text-lg mb-4">Backend Development</h3>
+                <h3 className="font-bold text-lg mb-4">Backend</h3>
                 <ul className="space-y-2.5">
-                  {["Node.js / Express.js", "Flask", "RESTful APIs", "jQuery"].map(skill => (
+                  {skills.find(s => s.group === "Backend")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -756,16 +779,16 @@ export default function Portfolio() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.5 }}
-                className={`rounded-xl border p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
+                className={`rounded-xl border p-4 sm:p-6 ${dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center mb-5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500 flex items-center justify-center mb-4 sm:mb-5">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm0 5h16" />
                   </svg>
                 </div>
                 <h3 className="font-bold text-lg mb-4">Databases</h3>
                 <ul className="space-y-2.5">
-                  {["MySQL", "MongoDB"].map(skill => (
+                  {skills.find(s => s.group === "Databases")?.items.map(skill => (
                     <li key={skill} className={`flex items-center gap-3 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                       {skill}
@@ -781,7 +804,7 @@ export default function Portfolio() {
         <section
           ref={sections.projects}
           data-section="projects"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+          className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24"
           aria-label="Projects section"
         >
           <motion.div
@@ -800,7 +823,7 @@ export default function Portfolio() {
           </motion.div>
 
           {/* Project Cards - Grid Layout */}
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((p, index) => (
               <motion.article
                 key={p.id}
@@ -808,13 +831,13 @@ export default function Portfolio() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`group rounded-xl border p-5 sm:p-6 flex flex-col transition-all duration-300 hover:border-gray-600 ${
+                className={`group rounded-xl border p-4 sm:p-5 md:p-6 flex flex-col transition-all duration-300 hover:border-gray-600 ${
                   dark ? "border-gray-800 bg-gray-900/60" : "border-gray-200 bg-white"
                 }`}
               >
                 {/* Header: Title + GitHub Icon */}
                 <div className="flex items-start justify-between gap-3 mb-4">
-                  <h3 className="font-bold text-lg sm:text-xl leading-tight">{p.title}</h3>
+                  <h3 className="font-bold text-base sm:text-lg md:text-xl leading-tight">{p.title}</h3>
                   <a
                     href={p.repo}
                     target="_blank"
@@ -836,6 +859,8 @@ export default function Portfolio() {
                   {p.id === 2 && "A real-time facial expression detection system built with CNN and YOLO, achieving 91.3% accuracy. Focused on key expressions for reliable emotion recognition in real-world applications."}
                   {p.id === 3 && "A Python/Flask full-stack web application providing high-quality abstractive summarization using Hugging Face Transformers and the distilbart-cnn-12-6 model."}
                   {p.id === 4 && "Responsive single-page application built with React and TypeScript to showcase proficiency in modern frontend development and state management."}
+                  {p.id === 5 && "A console-based Student Management System built with Java and MySQL for managing academic records with full CRUD operations using JDBC."}
+                  {p.id === 6 && "A secure text-sharing app with shareable links, time-based expiration, and view limits. Built with Next.js and Prisma ORM."}
                 </p>
 
                 {/* Tech Tags - Outlined style */}
@@ -873,9 +898,9 @@ export default function Portfolio() {
         <section
           ref={sections.education}
           data-section="education"
-          className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
+          className={`py-12 sm:py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -891,7 +916,7 @@ export default function Portfolio() {
                 My academic background and qualifications.
               </p>
             </motion.div>
-            <ol className="relative border-l-2 border-indigo-500/30 ml-2 sm:ml-4">
+            <ol className="relative border-l-2 border-indigo-500/30 ml-1 sm:ml-2 md:ml-4">
               <motion.li
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -950,7 +975,7 @@ export default function Portfolio() {
         <section
           ref={sections.contact}
           data-section="contact"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+          className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -967,7 +992,7 @@ export default function Portfolio() {
               Feel free to reach out for collaboration, questions about implementation patterns, or code reviews.
             </p>
           </motion.div>
-          <div className={`grid md:grid-cols-2 gap-8 md:gap-12 rounded-2xl p-6 sm:p-8 md:p-10 ${
+          <div className={`grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 ${
             dark ? "bg-gray-900/50 border border-gray-800/50" : "bg-white border border-gray-200"
           } shadow-lg`}>
             <motion.div 
@@ -1098,8 +1123,8 @@ export default function Portfolio() {
         </section>
 
         {/* Testimonials */}
-        <section className={`py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className={`py-12 sm:py-16 md:py-24 ${dark ? "bg-gray-900/30" : "bg-gray-50/50"}`}>
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1115,16 +1140,16 @@ export default function Portfolio() {
                 What colleagues and collaborators say about working with me.
               </p>
             </motion.div>
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className={`p-6 sm:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
+                className={`p-5 sm:p-6 md:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
               >
-                <div className="absolute -top-3 left-6 text-5xl text-indigo-500/20">“</div>
-                <p className={`italic text-base sm:text-lg leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Yadla Sunny is a fantastic developer who delivers on time and with quality."</p>
+                <div className="absolute -top-2 sm:-top-3 left-4 sm:left-6 text-4xl sm:text-5xl text-indigo-500/20">“</div>
+                <p className={`italic text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Yadla Sunny is a fantastic developer who delivers on time and with quality."</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">JD</div>
                   <div>
@@ -1138,10 +1163,10 @@ export default function Portfolio() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className={`p-6 sm:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
+                className={`p-5 sm:p-6 md:p-8 rounded-2xl border relative ${dark ? "bg-gray-900/80 border-gray-800/50" : "bg-white border-gray-200"}`}
               >
-                <div className="absolute -top-3 left-6 text-5xl text-indigo-500/20">“</div>
-                <p className={`italic text-base sm:text-lg leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Great attention to detail and always ready to help the team."</p>
+                <div className="absolute -top-2 sm:-top-3 left-4 sm:left-6 text-4xl sm:text-5xl text-indigo-500/20">“</div>
+                <p className={`italic text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 ${dark ? "text-gray-300" : "text-gray-700"}`}>"Great attention to detail and always ready to help the team."</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold">KV</div>
                   <div>
@@ -1158,7 +1183,7 @@ export default function Portfolio() {
         <section
           ref={sections.blog}
           data-section="blog"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+          className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1175,17 +1200,17 @@ export default function Portfolio() {
               Thoughts and tutorials on web development.
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             <motion.article 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+              className={`group p-5 sm:p-6 md:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
             >
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 ${dark ? "bg-indigo-500/10 text-indigo-400" : "bg-indigo-50 text-indigo-600"}`}>React</div>
-              <h3 className="font-semibold text-lg sm:text-xl mb-3 group-hover:text-indigo-500 transition-colors">How to Structure a React Project</h3>
-              <p className={`text-sm sm:text-base mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Tips for scalable folder structure and code organization.</p>
+              <div className={`inline-block px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium mb-3 sm:mb-4 ${dark ? "bg-indigo-500/10 text-indigo-400" : "bg-indigo-50 text-indigo-600"}`}>React</div>
+              <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2 sm:mb-3 group-hover:text-indigo-500 transition-colors">How to Structure a React Project</h3>
+              <p className={`text-sm sm:text-base mb-3 sm:mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Tips for scalable folder structure and code organization.</p>
               <a href="#" className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}>
                 Read more
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -1196,11 +1221,11 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className={`group p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+              className={`group p-5 sm:p-6 md:p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
             >
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 ${dark ? "bg-purple-500/10 text-purple-400" : "bg-purple-50 text-purple-600"}`}>Performance</div>
-              <h3 className="font-semibold text-lg sm:text-xl mb-3 group-hover:text-indigo-500 transition-colors">Optimizing React Performance</h3>
-              <p className={`text-sm sm:text-base mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Memoization, lazy loading, and best practices.</p>
+              <div className={`inline-block px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium mb-3 sm:mb-4 ${dark ? "bg-purple-500/10 text-purple-400" : "bg-purple-50 text-purple-600"}`}>Performance</div>
+              <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2 sm:mb-3 group-hover:text-indigo-500 transition-colors">Optimizing React Performance</h3>
+              <p className={`text-sm sm:text-base mb-3 sm:mb-4 ${dark ? "text-gray-400" : "text-gray-600"}`}>Memoization, lazy loading, and best practices.</p>
               <a href="#" className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}>
                 Read more
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -1211,8 +1236,8 @@ export default function Portfolio() {
       </main>
 
       {/* Footer */}
-      <footer className={`py-8 sm:py-12 pb-24 sm:pb-12 border-t ${dark ? "border-gray-800/50 bg-gray-950/50" : "border-gray-200 bg-gray-50"}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className={`py-6 sm:py-8 md:py-12 pb-28 sm:pb-12 border-t ${dark ? "border-gray-800/50 bg-gray-950/50" : "border-gray-200 bg-gray-50"}`}>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="font-bold text-lg bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
             <p className={`text-xs sm:text-sm text-center ${dark ? "text-gray-500" : "text-gray-500"}`}>
@@ -1235,13 +1260,13 @@ export default function Portfolio() {
 
       {/* Project Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={closeModal}>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-sm" onClick={closeModal}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className={`max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-6 sm:p-8 relative ${dark ? "bg-gray-900 border border-gray-800" : "bg-white"}`}
+            className={`w-full sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 sm:p-6 md:p-8 relative ${dark ? "bg-gray-900 border border-gray-800" : "bg-white"}`}
             onClick={e => e.stopPropagation()}
           >
             <button
@@ -1332,7 +1357,7 @@ function ScrollToTopButton({ dark }) {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 p-3 sm:p-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
+      className={`fixed bottom-24 sm:bottom-6 right-3 sm:right-6 z-40 p-2.5 sm:p-3 md:p-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
         dark ? "bg-indigo-600 text-white hover:bg-indigo-500" : "bg-indigo-600 text-white hover:bg-indigo-500"
       }`}
       aria-label="Scroll to top"
