@@ -971,6 +971,76 @@ export default function Portfolio() {
           </div>
         </section>
 
+        {/* Certifications */}
+        <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center md:text-left mb-10 md:mb-14"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
+              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+              Certifications
+            </h2>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+              Professional certifications and achievements.
+            </p>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {/* Java Programming */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className={`group p-5 sm:p-6 rounded-xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 ${dark ? "bg-orange-500/10" : "bg-orange-50"}`}>
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Java Programming</h3>
+              <p className={`text-sm mb-3 ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                Proficient in Java programming concepts including OOP, collections, and multithreading.
+              </p>
+              <div className={`inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full ${dark ? "bg-orange-500/10 text-orange-400" : "bg-orange-50 text-orange-600"}`}>
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Certified
+              </div>
+            </motion.div>
+
+            {/* SQL Intermediate */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className={`group p-5 sm:p-6 rounded-xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${dark ? "bg-gray-900/80 border-gray-800/50 hover:border-indigo-500/30" : "bg-white border-gray-200 hover:border-indigo-500/30"}`}
+            >
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 ${dark ? "bg-blue-500/10" : "bg-blue-50"}`}>
+                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">SQL (Intermediate)</h3>
+              <p className={`text-sm mb-3 ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                Skilled in SQL queries, joins, subqueries, and database optimization techniques.
+              </p>
+              <div className={`inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full ${dark ? "bg-blue-500/10 text-blue-400" : "bg-blue-50 text-blue-600"}`}>
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Certified
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Contact */}
         <section
           ref={sections.contact}
