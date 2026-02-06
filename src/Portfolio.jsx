@@ -449,7 +449,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.5, delay: 0.15 }}
               >
                 <h2 className={`text-xl sm:text-2xl md:text-3xl font-semibold ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
-                  Frontend Developer
+                  Full-Stack Developer  
                 </h2>
               </motion.div>
 
@@ -460,7 +460,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className={`text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}
               >
-                Frontend developer specializing in modern React with experience in building scalable component libraries and integrating REST APIs.
+                Full-Stack Developer with hands-on experience in building end-to-end web applications using Java, React, and SQL. Skilled in developing scalable backend logic, integrating RESTful APIs, and creating responsive, user-friendly interfaces. Passionate about solving real-world problems and continuously improving technical skills.
               </motion.p>
 
               {/* CTA Buttons */}
@@ -1256,19 +1256,6 @@ export default function Portfolio() {
 
       {/* Mobile sticky CTA bar - visible only on mobile when scrolled past hero */}
       <MobileCTABar dark={dark} />
-
-      {/* Social Links - hidden on mobile, shown on larger screens */}
-      <div className="hidden md:flex fixed top-1/2 left-0 z-40 flex-col gap-1 -translate-y-1/2">
-        <a href="https://github.com/Yadlasunny" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-indigo-600 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-indigo-600 hover:text-white"}`}>
-          <FaGithub size={18} />
-        </a>
-        <a href="https://linkedin.com/in/yadla-sunny" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-blue-600 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white"}`}>
-          <FaLinkedin size={18} />
-        </a>
-        <a href="https://twitter.com/your-handle" target="_blank" rel="noreferrer" className={`p-3 transition-all duration-200 rounded-r-lg ${dark ? "bg-gray-800 text-gray-400 hover:bg-sky-500 hover:text-white" : "bg-gray-100 text-gray-600 hover:bg-sky-500 hover:text-white"}`}>
-          <FaTwitter size={18} />
-        </a>
-      </div>
 
       {/* toast */}
       {toast && (
