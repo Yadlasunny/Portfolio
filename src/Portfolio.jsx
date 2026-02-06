@@ -446,7 +446,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className={`text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}
               >
-                Full-Stack Developer with hands-on experience in building end-to-end web applications using Java, React, and SQL. Skilled in developing scalable backend logic, integrating RESTful APIs, and creating responsive, user-friendly interfaces. Passionate about solving real-world problems and continuously improving technical skills.
+                Full-Stack Developer experienced in Java backend development, React frontend applications, and database-driven systems using MySQL. 
               </motion.p>
 
               {/* CTA Buttons */}
@@ -671,139 +671,225 @@ export default function Portfolio() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center md:text-left mb-10 md:mb-14"
+            className="text-center mb-10 md:mb-14"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-3">
-              <span className="hidden sm:block h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-600" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
               Featured Projects
             </h2>
-            <p className={`mt-3 text-sm sm:text-base max-w-2xl ${dark ? "text-gray-400" : "text-gray-600"}`}>
+            <p className={`mt-3 text-sm sm:text-base max-w-2xl mx-auto ${dark ? "text-gray-400" : "text-gray-600"}`}>
               A selection of my recent work and personal projects.
             </p>
           </motion.div>
-          {/* --- Project Sorting Bar --- */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6 items-stretch sm:items-center">
-            <div className="flex items-center gap-2">
-              <label className={`text-sm font-medium whitespace-nowrap ${dark ? "text-gray-300" : "text-gray-700"}`} htmlFor="sortProjects">Sort by:</label>
-              <select
-                id="sortProjects"
-                value={sortBy}
-                onChange={e => setSortBy(e.target.value)}
-                className={`px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${dark ? "bg-gray-900 border-gray-700 text-gray-200 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-800 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
-                aria-label="Sort projects"
-              >
-                <option value="date">Date</option>
-                <option value="tech">Tech</option>
-                <option value="favorites">Favorites</option>
-              </select>
-            </div>
-            <div className="flex-1 min-w-0">
+
+          {/* Filter & Search Bar */}
+          <div className="flex flex-col gap-4 mb-8">
+            {/* Search */}
+            <div className="relative">
+              <svg className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${dark ? "text-gray-500" : "text-gray-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
               <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="🔍 Search projects..."
-                className={`w-full px-4 py-2.5 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900 border-gray-700 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
+                placeholder="Search projects..."
+                className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm transition-all ${dark ? "bg-gray-900/50 border-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-indigo-500 focus:bg-gray-900" : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-indigo-500"} focus:outline-none focus:ring-2 focus:ring-indigo-500/20`}
                 aria-label="Search projects"
               />
             </div>
+
+            {/* Tech Filters + Sort */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <div className="flex flex-wrap gap-2">
+                {allTechs.map(tech => (
+                  <button
+                    key={tech}
+                    onClick={() => setProjectFilter(tech)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
+                      projectFilter === tech
+                        ? "bg-indigo-600 text-white shadow-sm"
+                        : dark
+                        ? "bg-gray-800/80 text-gray-400 hover:text-gray-200 hover:bg-gray-800"
+                        : "bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200"
+                    }`}
+                    aria-pressed={projectFilter === tech}
+                  >
+                    {tech}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 self-end sm:self-auto">
+                <span className={`text-xs ${dark ? "text-gray-500" : "text-gray-400"}`}>Sort:</span>
+                <select
+                  id="sortProjects"
+                  value={sortBy}
+                  onChange={e => setSortBy(e.target.value)}
+                  className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${dark ? "bg-gray-900 border-gray-800 text-gray-300 focus:border-indigo-500" : "bg-white border-gray-200 text-gray-700 focus:border-indigo-500"} focus:outline-none`}
+                  aria-label="Sort projects"
+                >
+                  <option value="date">Latest</option>
+                  <option value="tech">Tech</option>
+                  <option value="favorites">Favorites</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 justify-center md:justify-start">
-            {allTechs.map(tech => (
-              <button
-                key={tech}
-                onClick={() => setProjectFilter(tech)}
-                className={`px-3 sm:px-4 py-2 sm:py-2 rounded-full border text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                  projectFilter === tech
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-transparent shadow-md"
-                    : dark
-                    ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-indigo-500 active:bg-gray-800"
-                    : "bg-white border-gray-200 text-gray-700 hover:border-indigo-500 active:bg-gray-50"
-                }`}
-                aria-pressed={projectFilter === tech}
-              >
-                {tech}
-              </button>
-            ))}
-          </div>
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredProjects.map(p => (
-              <motion.div
+
+          {/* Project Cards */}
+          <div className="space-y-6">
+            {filteredProjects.map((p, index) => (
+              <motion.article
                 key={p.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className={`group rounded-2xl overflow-hidden border flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl active:scale-[0.98] ${
-                  dark ? "border-gray-800 bg-gray-900/80 hover:border-indigo-500/30" : "border-gray-200 bg-white hover:border-indigo-500/30"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className={`group rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-lg ${
+                  dark ? "border-gray-800 bg-gray-900/50 hover:border-gray-700" : "border-gray-200 bg-white hover:border-gray-300"
                 }`}
-                onClick={() => setSelectedProject(p)}
-                tabIndex={0}
-                role="button"
-                aria-label={`View details for ${p.title}`}
               >
-                <div className="relative overflow-hidden">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
-                    aria-label={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
-                    className={`absolute top-3 right-3 z-20 p-3 rounded-full transition-all duration-200 backdrop-blur-sm
-                      ${favorites.includes(p.id) ? "bg-red-500 text-white" : dark ? "bg-gray-800/90 text-gray-300" : "bg-white/90 text-gray-600"}
-                      hover:scale-110 active:scale-95`}
-                  >
-                    {favorites.includes(p.id) ? <FaHeart size={16} /> : <FaRegHeart size={16} />}
-                  </button>
-                  <img
-                    src={p.image}
-                    alt={`${p.title} project screenshot`}
-                    className="h-44 sm:h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
-                  <h3 className="font-bold text-base sm:text-lg leading-snug line-clamp-2">{p.title}</h3>
-                  <div className={`text-sm leading-relaxed flex-1 ${dark ? "text-gray-400" : "text-gray-600"}`}>{p.description}</div>
-                  <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
-                    {p.tech.slice(0, 3).map(t => (
-                      <span
-                        key={t}
-                        className={`text-[11px] sm:text-xs font-semibold px-2 py-1 rounded-md ${
-                          dark ? "bg-indigo-500/15 text-indigo-400" : "bg-indigo-50 text-indigo-600"
-                        }`}
+                <div className="flex flex-col lg:flex-row">
+                  {/* Project Image */}
+                  <div className="relative lg:w-80 xl:w-96 flex-shrink-0">
+                    <div className="aspect-video lg:aspect-auto lg:h-full relative overflow-hidden">
+                      <img
+                        src={p.image}
+                        alt={`${p.title} project screenshot`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = "none"; }}
+                        loading="lazy"
+                      />
+                      <div className={`absolute inset-0 ${dark ? "bg-gradient-to-r lg:bg-gradient-to-l from-gray-900/0 via-gray-900/0 to-gray-900/80" : "bg-gradient-to-r lg:bg-gradient-to-l from-white/0 via-white/0 to-white/80"} hidden lg:block`} />
+                    </div>
+                    {/* Favorite button */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); toggleFavorite(p.id); }}
+                      aria-label={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
+                      className={`absolute top-3 right-3 z-10 p-2.5 rounded-full transition-all duration-200 backdrop-blur-sm
+                        ${favorites.includes(p.id) ? "bg-red-500 text-white shadow-lg" : dark ? "bg-gray-900/80 text-gray-400 hover:text-white" : "bg-white/90 text-gray-500 hover:text-red-500"}
+                        hover:scale-110 active:scale-95`}
+                    >
+                      {favorites.includes(p.id) ? <FaHeart size={14} /> : <FaRegHeart size={14} />}
+                    </button>
+                  </div>
+
+                  {/* Project Content */}
+                  <div className="flex-1 p-5 sm:p-6 lg:p-8 flex flex-col">
+                    {/* Header: Title + Date */}
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                      <h3 className="font-bold text-lg sm:text-xl lg:text-2xl leading-tight pr-2">{p.title}</h3>
+                      <time className={`text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap self-start ${dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"}`}>
+                        {new Date(p.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                      </time>
+                    </div>
+
+                    {/* Problem Statement / Purpose */}
+                    <p className={`text-sm font-medium mb-3 ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
+                      {p.id === 1 && "Data-driven yield prediction for agricultural decision-making"}
+                      {p.id === 2 && "Real-time emotion detection using deep learning"}
+                      {p.id === 3 && "AI-powered text summarization web application"}
+                      {p.id === 4 && "Modern task management with React & TypeScript"}
+                    </p>
+
+                    {/* Key Features */}
+                    <div className={`mb-4 text-sm leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                      {p.id === 1 && (
+                        <ul className="space-y-1.5">
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Built a yield prediction system using Python, Spark, and Hadoop for large-scale agricultural datasets.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Enabled data-driven decision-making for farmers and stakeholders.</span></li>
+                        </ul>
+                      )}
+                      {p.id === 2 && (
+                        <ul className="space-y-1.5">
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Developed a real-time facial expression detection system with CNN and YOLO, achieving 91.3% accuracy.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Focused on key expressions (happiness, sadness, anger) for reliable real-world applications.</span></li>
+                        </ul>
+                      )}
+                      {p.id === 3 && (
+                        <ul className="space-y-1.5">
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Designed and implemented a Python/Flask full-stack web application providing high-quality abstractive summarization.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Integrated Hugging Face Transformers with distilbart-cnn-12-6 model for state-of-the-art results.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Demonstrated API workflow management with PyTorch/GPU backend processing.</span></li>
+                        </ul>
+                      )}
+                      {p.id === 4 && (
+                        <ul className="space-y-1.5">
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Responsive single-page application showcasing modern frontend development and state management.</span></li>
+                          <li className="flex gap-2"><span className="text-indigo-500 mt-1">•</span><span>Implemented core CRUD functionality with component-based architecture and user-friendly design.</span></li>
+                        </ul>
+                      )}
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="mb-5">
+                      <span className={`text-xs font-semibold uppercase tracking-wider ${dark ? "text-gray-500" : "text-gray-400"}`}>Tech Stack</span>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {p.tech.map(t => (
+                          <span
+                            key={t}
+                            className={`text-xs font-medium px-2.5 py-1 rounded-md transition-colors ${
+                              dark ? "bg-gray-800 text-gray-300 hover:bg-gray-750" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            }`}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-3 mt-auto pt-2">
+                      <a
+                        href={p.live}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-[0.98]"
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        {t}
-                      </span>
-                    ))}
-                    {p.tech.length > 3 && (
-                      <span className={`text-[11px] sm:text-xs font-medium px-2 py-1 rounded-md ${dark ? "bg-gray-800 text-gray-400" : "bg-gray-100 text-gray-500"}`}>+{p.tech.length - 3}</span>
-                    )}
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        Live Demo
+                      </a>
+                      <a
+                        href={p.repo}
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 border ${
+                          dark 
+                            ? "border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800" 
+                            : "border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50"
+                        } active:scale-[0.98]`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaGithub size={16} />
+                        View Code
+                      </a>
+                      <button
+                        onClick={() => setSelectedProject(p)}
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                          dark 
+                            ? "text-gray-400 hover:text-gray-200 hover:bg-gray-800" 
+                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                        } active:scale-[0.98]`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Details
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className={`px-4 sm:px-5 py-3.5 flex gap-4 text-sm font-medium border-t ${dark ? "border-gray-800" : "border-gray-100"}`}>
-                  <a
-                    href={p.live}
-                    className={`flex items-center gap-1.5 py-1 transition-colors ${dark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    Live Demo
-                  </a>
-                  <a
-                    href={p.repo}
-                    className={`flex items-center gap-1.5 py-1 transition-colors ${dark ? "text-gray-400 hover:text-gray-300" : "text-gray-600 hover:text-gray-800"}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <FaGithub size={14} />
-                    Source
-                  </a>
-                </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
+
+          {/* Empty State */}
+          {filteredProjects.length === 0 && (
+            <div className={`text-center py-16 ${dark ? "text-gray-500" : "text-gray-400"}`}>
+              <svg className="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-lg font-medium">No projects found</p>
+              <p className="text-sm mt-1">Try adjusting your search or filters</p>
+            </div>
+          )}
         </section>
 
         {/* Education */}
