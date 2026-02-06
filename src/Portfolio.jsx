@@ -405,115 +405,154 @@ export default function Portfolio() {
         <section
           ref={sections.home}
           data-section="home"
-          className="relative min-h-[90vh] md:min-h-[85vh] flex items-center overflow-hidden"
+          className="relative min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] flex items-center overflow-hidden"
           aria-label="Home section"
         >
-          {/* Background decoration */}
+          {/* Subtle background decoration */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className={`absolute top-20 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${dark ? "bg-indigo-600" : "bg-indigo-400"}`} />
-            <div className={`absolute -bottom-20 -left-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${dark ? "bg-purple-600" : "bg-purple-400"}`} />
+            <div className={`absolute top-1/4 -right-32 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 ${dark ? "bg-indigo-600" : "bg-indigo-400"}`} />
+            <div className={`absolute bottom-1/4 -left-32 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 ${dark ? "bg-purple-600" : "bg-purple-400"}`} />
           </div>
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col lg:flex-row gap-10 lg:gap-16 items-center relative z-10 w-full">
-            <div className="flex-1 space-y-6 md:space-y-8 text-center lg:text-left">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative z-10 w-full">
+            <div className="text-center space-y-6 sm:space-y-8">
+              {/* Greeting badge */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.5 }}
               >
-                <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${dark ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" : "bg-indigo-50 text-indigo-600 border border-indigo-100"}`}>
-                  👋 Welcome to my portfolio
+                <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${dark ? "bg-gray-800/80 text-gray-300 border border-gray-700/50" : "bg-gray-100 text-gray-600 border border-gray-200"}`}>
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  Available for opportunities
                 </span>
               </motion.div>
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
+
+              {/* Name - Primary heading */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[5rem]" 
-                aria-live="polite"
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  {typedHeadline}
-                </span>
-                <span className="inline-block w-0.5 h-8 md:h-10 bg-indigo-600 animate-pulse ml-1 align-middle" aria-hidden="true"></span>
-              </motion.h1>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                  <span className={dark ? "text-white" : "text-gray-900"}>Yadla Sunny</span>
+                </h1>
+              </motion.div>
+
+              {/* Role - Secondary heading */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+              >
+                <h2 className={`text-xl sm:text-2xl md:text-3xl font-semibold ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
+                  Frontend Developer
+                </h2>
+              </motion.div>
+
+              {/* Professional summary */}
               <motion.p 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className={`text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className={`text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}
               >
-                I focus on component architecture, accessibility, and smooth developer experience.
+                Frontend developer specializing in modern React with experience in building scalable component libraries and integrating REST APIs.
               </motion.p>
+
+              {/* CTA Buttons */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-4"
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 sm:pt-6"
               >
                 <button
                   onClick={() => scrollTo("projects")}
-                  className="group px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300
-                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white
-                    hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5
-                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95"
+                  className={`group px-8 py-4 rounded-lg font-semibold text-base transition-all duration-200
+                    bg-indigo-600 text-white
+                    hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/20
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
+                    active:scale-[0.98]`}
                 >
                   View Projects
-                  <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
+                  <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">→</span>
                 </button>
 
-                <button
-                  onClick={() => scrollTo("contact")}
-                  className={`px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300
-                    ${dark ? "bg-gray-800 text-gray-100 hover:bg-gray-700 border border-gray-700" : "bg-white text-gray-900 hover:bg-gray-50 border border-gray-200"}
-                    hover:shadow-lg hover:-translate-y-0.5
-                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95`}
-                >
-                  Contact Me
-                </button>
                 <a
                   href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-6 sm:px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2
-                    ${dark ? "bg-gray-800 text-gray-100 hover:bg-gray-700 border border-gray-700" : "bg-white text-gray-900 hover:bg-gray-50 border border-gray-200"}
-                    hover:shadow-lg hover:-translate-y-0.5
-                    focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95`}
+                  className={`group px-8 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2
+                    ${dark 
+                      ? "bg-gray-800 text-white border border-gray-700 hover:bg-gray-750 hover:border-gray-600" 
+                      : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 hover:border-gray-400"}
+                    hover:shadow-lg
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
+                    active:scale-[0.98]`}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                  Resume
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download Resume
+                </a>
+              </motion.div>
+
+              {/* Quick contact links */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+                className="flex items-center justify-center gap-4 pt-6 sm:pt-8"
+              >
+                <a 
+                  href="https://github.com/Yadlasunny" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  aria-label="GitHub"
+                >
+                  <FaGithub size={22} />
+                </a>
+                <a 
+                  href="https://linkedin.com/in/yadla-sunny" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin size={22} />
+                </a>
+                <a 
+                  href="mailto:yadlasunny143@gmail.com"
+                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  aria-label="Email"
+                >
+                  <svg className="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
                 </a>
               </motion.div>
             </div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex-1 w-full max-w-lg lg:max-w-none"
-            >
-              <div
-                className={`rounded-2xl p-6 sm:p-8 md:p-10 border relative overflow-hidden backdrop-blur-sm ${
-                  dark ? "border-gray-800/50 bg-gray-900/50" : "border-gray-200/50 bg-white/50"
-                } shadow-xl`}
-              >
-                <div className="absolute inset-0 pointer-events-none opacity-30 bg-[radial-gradient(circle_at_30%_30%,#6366f1,transparent_60%)]" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                    <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                    <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                  </div>
-                  <p className={`text-xs uppercase tracking-widest font-semibold mb-4 ${dark ? "text-indigo-400" : "text-indigo-600"}`}>
-                    Summary
-                  </p>
-                  <p className={`leading-relaxed text-sm sm:text-base ${dark ? "text-gray-300" : "text-gray-700"}`}>
-                    Frontend developer specializing in modern React (hooks, performance, state management) with experience
-                    in building scalable component libraries and integrating REST APIs.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
+          >
+            <button 
+              onClick={() => scrollTo("about")}
+              className={`p-2 rounded-full transition-colors ${dark ? "text-gray-500 hover:text-gray-300" : "text-gray-400 hover:text-gray-600"}`}
+              aria-label="Scroll to about section"
+            >
+              <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+          </motion.div>
         </section>
 
         {/* About */}
