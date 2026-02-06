@@ -422,8 +422,11 @@ export default function Portfolio() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${dark ? "bg-gray-800/80 text-gray-300 border border-gray-700/50" : "bg-gray-100 text-gray-600 border border-gray-200"}`}>
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm ${dark ? "bg-gray-800/90 text-gray-200 border border-green-500/30 shadow-green-500/10" : "bg-white text-gray-700 border border-green-500/40 shadow-green-500/10"}`}>
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                  </span>
                   Available for opportunities
                 </span>
               </motion.div>
@@ -465,13 +468,13 @@ export default function Portfolio() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 sm:pt-6"
+                className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center pt-6 sm:pt-8 px-4 sm:px-0"
               >
                 <button
                   onClick={() => scrollTo("projects")}
-                  className={`group px-8 py-4 rounded-lg font-semibold text-base transition-all duration-200
+                  className={`group px-8 py-4 min-h-[56px] rounded-xl font-semibold text-base transition-all duration-200
                     bg-indigo-600 text-white
-                    hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/20
+                    hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-600/25 hover:-translate-y-0.5
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
                     active:scale-[0.98]`}
                 >
@@ -483,11 +486,11 @@ export default function Portfolio() {
                   href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group px-8 py-4 rounded-lg font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2
+                  className={`group px-8 py-4 min-h-[56px] rounded-xl font-semibold text-base transition-all duration-200 flex items-center justify-center gap-2.5
                     ${dark 
-                      ? "bg-gray-800 text-white border border-gray-700 hover:bg-gray-750 hover:border-gray-600" 
-                      : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 hover:border-gray-400"}
-                    hover:shadow-lg
+                      ? "bg-gradient-to-r from-gray-800 to-gray-800 text-white border-2 border-indigo-500/50 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/15" 
+                      : "bg-white text-gray-900 border-2 border-indigo-500/40 hover:border-indigo-500 hover:shadow-xl hover:shadow-indigo-500/15"}
+                    hover:-translate-y-0.5
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${dark ? "focus:ring-offset-gray-950" : "focus:ring-offset-white"}
                     active:scale-[0.98]`}
                 >
@@ -503,34 +506,37 @@ export default function Portfolio() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
-                className="flex items-center justify-center gap-4 pt-6 sm:pt-8"
+                className="flex items-center justify-center gap-2 sm:gap-3 pt-8 sm:pt-10 pb-4"
               >
                 <a 
                   href="https://github.com/Yadlasunny" 
                   target="_blank" 
                   rel="noreferrer"
-                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  className={`flex items-center gap-2 p-3 sm:px-4 sm:py-2.5 rounded-full transition-all duration-200 min-w-[48px] min-h-[48px] justify-center ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800/80" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"}`}
                   aria-label="GitHub"
                 >
-                  <FaGithub size={22} />
+                  <FaGithub size={24} />
+                  <span className="hidden md:inline text-sm font-medium">GitHub</span>
                 </a>
                 <a 
                   href="https://linkedin.com/in/yadla-sunny" 
                   target="_blank" 
                   rel="noreferrer"
-                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  className={`flex items-center gap-2 p-3 sm:px-4 sm:py-2.5 rounded-full transition-all duration-200 min-w-[48px] min-h-[48px] justify-center ${dark ? "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10" : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"}`}
                   aria-label="LinkedIn"
                 >
-                  <FaLinkedin size={22} />
+                  <FaLinkedin size={24} />
+                  <span className="hidden md:inline text-sm font-medium">LinkedIn</span>
                 </a>
                 <a 
                   href="mailto:yadlasunny143@gmail.com"
-                  className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-400 hover:text-white hover:bg-gray-800" : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"}`}
+                  className={`flex items-center gap-2 p-3 sm:px-4 sm:py-2.5 rounded-full transition-all duration-200 min-w-[48px] min-h-[48px] justify-center ${dark ? "text-gray-400 hover:text-red-400 hover:bg-red-500/10" : "text-gray-600 hover:text-red-600 hover:bg-red-50"}`}
                   aria-label="Email"
                 >
-                  <svg className="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
+                  <span className="hidden md:inline text-sm font-medium">Email</span>
                 </a>
               </motion.div>
             </div>
@@ -541,14 +547,14 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
+            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2"
           >
             <button 
               onClick={() => scrollTo("about")}
-              className={`p-2 rounded-full transition-colors ${dark ? "text-gray-500 hover:text-gray-300" : "text-gray-400 hover:text-gray-600"}`}
+              className={`p-3 rounded-full transition-all duration-200 ${dark ? "text-gray-500 hover:text-gray-300 hover:bg-gray-800/50" : "text-gray-400 hover:text-gray-600 hover:bg-gray-100/50"}`}
               aria-label="Scroll to about section"
             >
-              <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </button>
