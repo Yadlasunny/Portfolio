@@ -322,25 +322,6 @@ export default function Portfolio() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-18">
           <div className="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Yadla Sunny</div>
-          <nav className="hidden md:flex gap-1">
-            {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
-              <button
-                key={item}
-                onClick={() => scrollTo(item)}
-                className={`capitalize text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 ${
-                  activeSection === item
-                    ? dark
-                      ? "text-indigo-400"
-                      : "text-indigo-600"
-                    : dark
-                      ? "text-gray-300 hover:text-gray-100"
-                      : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setDark(d => !d)}
@@ -350,53 +331,58 @@ export default function Portfolio() {
             >
               {dark ? "☀️" : "🌙"}
             </button>
-            <button
-              onClick={() => setMobileMenu(m => !m)}
-              className={`md:hidden p-2.5 rounded-xl transition-all duration-200 ${dark ? "bg-gray-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-200"}`}
-              aria-label="Toggle menu"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileMenu ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setMobileMenu(m => !m)}
+                className={`p-2.5 rounded-xl transition-all duration-200 ${dark ? "bg-gray-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-200"}`}
+                aria-label="Toggle menu"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="5" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="12" cy="19" r="2" />
+                </svg>
+              </button>
+              {mobileMenu && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  className={`absolute right-0 top-full mt-2 w-48 rounded-xl shadow-xl border overflow-hidden ${dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200"}`}
+                >
+                  {["home", "about", "skills", "education", "projects", "contact"].map(item => (
+                    <button
+                      key={item}
+                      onClick={() => scrollTo(item)}
+                      className={`block w-full text-left px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                        activeSection === item
+                          ? dark
+                            ? "bg-indigo-600/20 text-indigo-400"
+                            : "bg-indigo-50 text-indigo-600"
+                          : dark
+                            ? "text-gray-300 hover:bg-gray-800"
+                            : "text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </button>
+                  ))}
+                  <div className={`border-t ${dark ? "border-gray-800" : "border-gray-200"}`}>
+                    <a
+                      href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-2 w-full px-4 py-3 text-sm font-semibold transition-all duration-200 ${dark ? "text-indigo-400 hover:bg-gray-800" : "text-indigo-600 hover:bg-gray-50"}`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                      Resume
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
-        {mobileMenu && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={`md:hidden px-4 pb-4 space-y-1 border-t ${dark ? "bg-gray-950/95 border-gray-800" : "bg-white/95 border-gray-200"}`}
-          >
-            {["home", "about", "skills", /* removed "experience", */ "education", "projects", "contact"].map(item => (
-              <button
-                key={item}
-                onClick={() => scrollTo(item)}
-                className={`block w-full text-left px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
-                  activeSection === item
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
-                    : dark
-                      ? "text-gray-300 hover:bg-gray-800 active:bg-gray-700"
-                      : "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
-                }`}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </button>
-            ))}
-            {/* Quick actions for mobile */}
-            <div className="pt-3 mt-2 border-t border-gray-200 dark:border-gray-800">
-              <a
-                href="https://drive.google.com/file/d/1lf5cQTLcXM-minKaTXSyPcYLL8yVQXg9/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                Download Resume
-              </a>
-            </div>
-          </motion.div>
-        )}
       </header>
 
       {/* Main content */}
