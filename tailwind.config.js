@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./index.html",
@@ -8,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xs': '375px', // Extra small devices (iPhone SE, etc.)
+        'xs': '375px',
       },
     },
   },
