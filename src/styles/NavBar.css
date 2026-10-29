@@ -1,0 +1,130 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: var(--navy);
+  color: var(--lightest-slate);
+  font-family: "NTR", sans-serif;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--lightest-navy);
+}
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  color: var(--lightest-slate);
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "NTR", sans-serif;
+}
+
+.navbar-brand:hover {
+  color: var(--green-bright);
+}
+
+.navbar-links,
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-links button,
+.nav-link {
+  background: none;
+  border: none;
+  color: var(--lightest-slate);
+  font-family: "NTR", sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.navbar-links button:hover,
+.nav-link:hover {
+  color: var(--green-bright);
+}
+
+.navbar-icons a {
+  color: var(--lightest-slate);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.navbar-icons a:hover {
+  color: var(--green-bright);
+}
+
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: 1px solid var(--lightest-navy);
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: var(--lightest-slate);
+  cursor: pointer;
+}
+
+.navbar-collapse {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .navbar-toggler {
+    display: flex;
+  }
+
+  .navbar-collapse {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    right: 0;
+    background-color: var(--navy);
+    border-bottom: 1px solid var(--lightest-navy);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 1rem 1.5rem 1.5rem;
+    display: none;
+  }
+
+  .navbar-collapse.open {
+    display: flex;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .navbar-links button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 0;
+  }
+
+  .navbar-icons {
+    padding-top: 10px;
+    gap: 1.25rem;
+  }
+}

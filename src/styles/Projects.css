@@ -1,0 +1,139 @@
+#projects {
+  margin: auto;
+  max-width: 1000px;
+  padding: 80px 0;
+}
+
+#projects .section-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+#projects .section-header::after {
+  order: 1;
+  flex-grow: 1;
+  width: auto;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  grid-gap: 10px;
+  padding-left: 0;
+}
+
+@media (max-width: 1080px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+.projects-card {
+  position: relative;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem 1.75rem;
+  background-color: var(--light-navy);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.projects-card:hover {
+  transform: translateY(-7px);
+  background-color: var(--lightest-navy);
+}
+
+.card-header {
+  margin-top: -8px;
+  display: flex;
+  padding: 0 0 1.25em !important;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.folder-icon {
+  color: var(--green-bright);
+  font-size: 32px;
+}
+
+.explore-link {
+  order: 2;
+  margin-left: 20px;
+  font-family: "NTR", sans-serif;
+  font-size: 18px;
+  color: var(--green-bright);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.explore-link:hover {
+  color: var(--lightest-slate) !important;
+  transform: translateX(5px);
+}
+
+.explore-link::after {
+  content: "\2192";
+  margin-left: 8px;
+  font-size: 20px;
+}
+
+.github-icon,
+.open-icon {
+  color: var(--lightest-slate);
+}
+
+.github-icon:hover,
+.open-icon:hover {
+  color: var(--green-bright);
+}
+
+.open-icon {
+  margin-left: 10px;
+}
+
+.card-title {
+  font-family: "NTR", sans-serif;
+  color: var(--lightest-slate);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-desc {
+  font-family: "NTR", sans-serif;
+  color: var(--slate);
+  font-size: 17px;
+  padding: 8px 0 20px;
+  flex-grow: 1;
+}
+
+.card-tech {
+  font-family: "NTR", sans-serif;
+  color: var(--slate);
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  #projects {
+    padding: 60px 20px;
+  }
+
+  #projects .section-header {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  #projects .section-header::after {
+    display: none;
+  }
+
+  .explore-link {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}

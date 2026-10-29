@@ -1,0 +1,119 @@
+:root {
+  --dark-navy: #000000;
+  --navy: #0a0a0a;
+  --light-navy: #1a1a1a;
+  --lightest-navy: #333333;
+  --navy-shadow: rgba(0, 0, 0, 0.7);
+  --slate: #8a8a8a;
+  --light-slate: #b3b3b3;
+  --lightest-slate: #f2f2f2;
+  --white: #ffffff;
+  --green-bright: #ffffff;
+  --green-tint: rgba(255, 255, 255, 0.1);
+  --yellow: #cccccc;
+}
+
+[id] {
+  scroll-margin-top: 80px;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-section.is-visible > *:nth-child(1) { transition-delay: 0s; }
+.fade-in-section.is-visible > *:nth-child(2) { transition-delay: 0.1s; }
+.fade-in-section.is-visible > *:nth-child(3) { transition-delay: 0.15s; }
+.fade-in-section.is-visible > *:nth-child(4) { transition-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.App {
+  font-family: "NTR", sans-serif;
+  background-color: var(--navy);
+  color: var(--lightest-slate);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--green-bright);
+}
+
+a:hover {
+  color: var(--lightest-slate);
+}
+
+#content {
+  width: 100%;
+}
+
+::selection {
+  background: var(--lightest-navy);
+}
+
+.section-header {
+  display: flex;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.section-header::after {
+  content: "";
+  display: block;
+  width: 300px;
+  margin-top: 39px;
+  height: 1px;
+  margin-left: 20px;
+  background-color: var(--lightest-navy);
+}
+
+.section-title {
+  font-family: "NTR", sans-serif;
+  color: var(--lightest-slate);
+  font-size: 46px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 800px) {
+  .App {
+    flex-direction: column;
+    padding: 0 24px;
+  }
+
+  #content {
+    padding: 10px 10px;
+    width: 100%;
+  }
+
+  .section-header {
+    width: unset;
+  }
+
+  .section-header::after {
+    display: none;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+}
